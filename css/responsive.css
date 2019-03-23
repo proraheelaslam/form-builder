@@ -1,0 +1,414 @@
+@media (min-width: 1700px) and (max-width: 2800px) {   
+ 
+
+}
+
+@media (min-width: 1280px) and (max-width:1365px) {   
+}
+
+
+
+
+
+
+
+
+@media (min-width:1024px) and (max-width:1279px) {  
+body { -webkit-text-size-adjust:none; }
+.process_left{ width:22px; }
+.process_nav ul li a{ font-size:11px; padding: 4px 3px; }
+.process_nav ul li a i{ font-size:13px; padding-right: 4px; min-width:15px;  }
+.process_nav ul li a.process_done{  }
+.process_nav ul li a.process_done::after {  background-size: 12px auto; width: 16px; left:1px;  }
+.process_left a{ width:16px; }
+.headerRight{ padding-left:10px; padding-right:0px; }
+.designHome_btn a{ font-size:11px; padding: 7px 4px; }
+.setting_related ul li{ padding:0px 5px; }
+.setting_related{ width:106px; }
+.parent_list ul{ padding-left:6px; }
+.auditBar_nav ul li a{ width:25px; height:25px; }
+.form_field .datepicker {  padding-right: 26px;  background-size: 14px auto; }
+.notification_popup_main{ right:-112px; }
+.task_form_main .formRow{ padding-bottom:0px; }
+.task_form_main .formRow .col4:first-child{ width:100%; }
+.task_form_main .formRow .col4{ width:50%; padding-bottom:10px; }
+.task_form_main .formRow .col8{ width:100%;  padding-bottom:10px; }
+.form_heading strong, .form_heading span, .form_heading i{ font-size:12px; }
+.alert_notification.header_dropdown_show:after{ padding:16px 8px; top:-16px; left:-8px; }
+.add_element_list ul li{ width:100%; }
+.right_bar{ width:150px; }
+.middle_section{ padding-right:150px; }
+
+.form_manage_nav ul li.manage_nav_list{ padding-left:8px;   }
+	.manage_settingsReview li a{ min-width:0; font-size:12px !important; }
+	.manage_nav_undoRedo_box a{ width:30px; }
+	.formDesign_title h5{ font-size:12px; }
+	.sectionTitle h5{ font-size:12px; }
+	.formSection{ padding:6px; }
+	.form_rowHover{ padding:6px; }
+	
+	.formDesign_section .col6, .formDesign_section .col9{ width:100%; }
+	.allField_titleCol{ width:100% !important; }
+	.allField_titleCol .formHeading_20{ padding-top:0px; padding-left:10px;}
+
+.form_radio label em{ font-size:12px; }
+	
+	.tab_50{ width:50% !important; }
+	.formDesign_section .form_heading strong, .formDesign_section .form_heading span, .formDesign_section .form_heading i{ padding-bottom:10px;}
+	.upload_file_main ul li, .upload_file span{ font-size:12px; }
+	.upload_file strong{ font-size:12px; padding:10px;  }
+	.form_editRow{ padding-right:0px; }
+	.form_rating ul{ margin:0px -4px; }
+	.form_rating ul li{ padding:0px 4px; }
+	.form_rating ul li a {  width:22px; height:22px; font-size:10px; line-height:19px;   } 
+	.form_field input{ font-size:12px; }
+	.upload_picture{ height:100px; }
+	.upload_picture span{ font-size:10px;  background-size: 30px auto; padding-top: 30px; margin-top: -22px; }
+	.takePhoto_icon1, .takePhoto_icon3, .takePhoto_icon5{ background-size:16px auto; }
+    .takePhoto_icon2, .takePhoto_icon4, .takePhoto_icon6{ background-size:14px auto; }
+	.tableFeilds_heading h5{ font-size:12px; }
+	.selectbox_dropdown li, .selectbox_span{ font-size:12px; }
+
+
+
+
+
+
+
+ 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (min-width:768px) and (max-width:1023px) {  
+	body { -webkit-text-size-adjust:none; }
+	.header_right{ display:block; width:100%; padding-bottom:40px;   }
+	.header_left{ display:block; width:100%;  position:absolute; left:0px; bottom:0px; padding:8px 10px; background: #34302d;}
+	.process_left{ width:22px; }
+	.process_nav ul li a{ font-size:11px; padding: 4px 3px; padding-top:3px; min-height: 28px; }
+	.process_nav ul li a i{ font-size:14px; padding-right:6px; padding-bottom:1px; min-width:18px; }
+	.process_nav ul li a.process_done::after {  background-size: 12px auto; width: 16px; left:1px;  }
+	.header{ min-height:84px; }
+	.process_left a{ width:16px; }
+	.headerRight{ padding-left:10px; padding-right:0px; padding-bottom:6px;  }
+	.designHome_btn a{ font-size:11px;   }
+	.setting_related ul li{   }
+	.setting_related{   }
+	.parent_list ul{ padding-left:6px; }
+	.auditBar_nav ul li a{ width:22px; height:22px; }
+	.auditBar_nav ul li a img{ max-width:14px; }
+	.form_field .datepicker {  padding-right: 26px;  background-size: 14px auto; }
+	
+	.auditBar_left{ width:100%; float:none; padding-bottom:10px; }
+	.auditBar_right{ width:auto; float:left; margin-left:-8px;  }
+	.auditBar_nav ul{ float:left; }
+	.taskHeader_tab ul li{ padding:0px 2px; }
+	.taskHeader_tab ul li a{ font-size:12px; padding:10px 5px;  }
+	.taskHeader_text h5{ font-size:12px; }
+	
+	.task_form_main .formRow{ padding-bottom:0px; }
+	.task_form_main .formRow .col4{ width:100%; padding-bottom:10px; }
+	.task_form_main .formRow .col8{ width:100%;  padding-bottom:10px; }
+	.form_heading strong, .form_heading span, .form_heading i{ font-size:12px; }
+	.notification_popup_main{ right:-144px; }
+	.add_element_list ul li{ width:100%; }
+	
+	
+	.right_bar{ width:150px; }
+	.middle_section{ padding-right:150px; }
+	
+	.form_manage_nav ul li.manage_nav_list{ padding-left:8px;   }
+	.manage_settingsReview li a{ min-width:0; font-size:12px !important; }
+	.manage_nav_undoRedo_box a{ width:30px; }
+	.formDesign_title h5{ font-size:12px; }
+	.sectionTitle h5{ font-size:12px; }
+	.formSection{ padding:6px; }
+	.form_rowHover{ padding:6px; }
+	
+	.formDesign_section .col6, .formDesign_section .col9{ width:100%; }
+	.allField_titleCol{ width:100% !important; }
+	.allField_titleCol .formHeading_20{ padding-top:0px; padding-left:10px;}
+	
+	.form_radio label em{ font-size:12px; }
+	
+	.tab_50{ width:50% !important; }
+	.formDesign_section .form_heading strong, .formDesign_section .form_heading span, .formDesign_section .form_heading i{ padding-bottom:10px;}
+	.upload_file_main ul li, .upload_file span{ font-size:12px; }
+	.upload_file strong{ font-size:12px; padding:10px;  }
+	.form_editRow{ padding-right:0px; }
+	.form_rating ul{ margin:0px -4px; }
+	.form_rating ul li{ padding:0px 4px; }
+	.form_rating ul li a {  width:22px; height:22px; font-size:10px; line-height:19px;   } 
+	.form_field input{ font-size:12px; }
+	.upload_picture{ height:100px; }
+	.upload_picture span{ font-size:10px;  background-size: 30px auto; padding-top: 30px; margin-top: -22px; }
+	.takePhoto_icon1, .takePhoto_icon3, .takePhoto_icon5{ background-size:16px auto; }
+    .takePhoto_icon2, .takePhoto_icon4, .takePhoto_icon6{ background-size:14px auto; }
+	.tableFeilds_heading h5{ font-size:12px; }
+	.selectbox_dropdown li, .selectbox_span{ font-size:12px; }
+	.checkbox_action ul li{ padding:0px 3px; }
+	.popup_tabsTitle ul li a{ font-size:12px; padding:8px 6px; }
+	
+	.popupTabs_show .col6, .popupTabs_show .col9, .popupTabs_show .col5, .popupTabs_show .col7{ width:100%; padding-bottom:10px;}
+	.allField_titleCol .form_heading strong{ padding-top:0px; padding-bottom:10px; }
+	.value_note p{ font-size:12px; }
+	.popupRow_hasTipIcon{ padding-right:40px; }
+	
+	.popupRow_hasTipIcon  .popupTooltip{ left:inherit; right:-10px; }
+	.popupRow_hasTipIcon  .popupTooltip:after{ left:inherit; right:10px; }
+
+	.property_checkMain .formCell.col6{ width:50%; }
+	.checkbox_listing .formCell.col3, .checkbox_listing .formCell.col5, .checkbox_listing .formCell.col2, .checkbox_listing .formCell.col4{ width:25% !important; }
+	.checkbox_listing .formCell .form_heading strong{ padding-top:10px !important;}
+	.form_checkbox label{ font-size:12px; }
+
+
+
+
+
+ 
+}
+
+@media (min-width:200px) and (max-width:767px) { 
+body { -webkit-text-size-adjust:none; }
+.header_right{  width:100%; position:absolute; right:0px; top:40px; padding:10px 15px; background:#34302d; box-shadow:0px 0px 6px rgba(0,0,0,0.09);   display:none;}
+
+.header_right.show{ display:block; }
+
+.header_left{ display:block; width:100%; background: #34302d; padding:0px; }
+.process_left{ width:22px; }
+.process_nav ul li a{ font-size:11px; padding: 4px 3px; padding-top:3px; min-height: 28px; }
+.process_nav ul li a i{ font-size:14px; padding-right:6px; padding-bottom:1px;  min-width:18px; }
+.process_nav ul li a.process_done{ }
+
+ 
+.process_nav ul li a.process_done::after {  background-size: 12px auto; width: 16px; left:1px;  }
+
+.process_left a{ width:16px; }
+.headerRight{ padding-left:15px; padding-right:15px;  }
+.auditBar_nav{ width:auto; margin-left:-8px;}
+.audit_bar{ padding-bottom:6px;}
+.designHome_btn a{ font-size:11px;  }
+.setting_related ul li{  }
+.setting_related{   }
+.parent_list ul{ padding-left:6px; padding-bottom:4px; }
+.auditBar_nav ul li a{ width:20px; height:20px; }
+.auditBar_nav ul li a img{ max-width:12px; }
+.form_field .datepicker {  padding-right: 26px;  background-size: 14px auto; }
+.auditBar_text p{ font-size:12px; }
+.auditBar_text span{ font-size:11px; }
+.auditBar_left{ width:100%; float:none; padding-bottom:10px; }
+.auditBar_right{ width:100%; float:left; }
+.auditBar_nav ul{ float:left; }
+.taskHeader_tab ul li{ padding:0px 1px; }
+.taskHeader_tab ul li a{ font-size:10px; padding:5px 3px;  }
+.taskHeader_text h5{ font-size:10px; }
+
+.taskHeader_arrow {  width:20px; height:20px; background-size:7px auto !important; margin-top:2px;  }
+
+.task_form_main .formRow{ padding-bottom:0px; }
+.task_form_main .formRow .col4{ width:100%; padding-bottom:6px; }
+.task_form_main .formRow .col8{ width:100%;  padding-bottom:6px; }
+.form_heading strong, .form_heading span, .form_heading i{ font-size:10px; }
+
+.task_form_main .form_field input, .task_form_main .selectbox_span{ padding:5px; font-size:10px;  height:30px;}
+.task_form_main .selectbox::before{ padding:5px 0px; font-size:12px; right:5px; }
+.task_form_main  .selectbox{ height:30px; }
+.task_form_main .selectbox_dropdown li{ font-size:10px; }
+.leftBar_menu ul li a span{ font-size:12px; }
+.leftBar_menu ul li a i{ width:16px; }
+
+.auditContent_scroll { min-height:130px; }
+
+.mCSB_vertical_horizontal > .mCSB_scrollTools.mCSB_scrollTools_vertical{ margin-right:-6px; }
+.mCSB_vertical_horizontal > .mCSB_scrollTools.mCSB_scrollTools_horizontal{ margin-bottom:-6px; }
+.auditContent_scroll .mCSB_container_wrapper > .mCSB_container{ padding:0px !important; }
+
+ 
+.header{ position:absolute; }
+.taskHeader_left{ width:30%;   }
+.taskHeader_right{ width:70%; }
+.taskHeader_text{ padding-top:5px; cursor:pointer; }
+
+ .left_bar{ left:-200px;}
+.open_mobile_menu .left_bar{ left:0px;}
+.left_bar{ width:200px;   }
+.open_left_menu .left_bar{ width:200px;  }
+.left_bar .tooltip { display:block;}
+.open_left_menu .left_bar .tooltip { display:block;}
+.wrapper.open_left_menu, .wrapper{ padding-left:0px; }
+
+.open_left_menu .task_main, .task_main{ padding-left:0px; }
+.leftBar_logo a { max-width:110px; }
+.headerLeftBar{ max-width:none; padding-top:10px; padding-bottom:10px; }
+.headerRight { width:100% !important; }
+.leftBar_logo{ padding-left:0px; }
+.menu_toggle{ top:12px; display:none; }
+.process_nav ul li{ width:33.33%; max-width:none; }
+
+
+.open_left_menu .headerLeftBar, .headerLeftBar{  max-width:none; position:relative; }
+.open_left_menu .header_inner, .header_inner{ padding-left:0px; }
+
+.process_right{ width:100%; }
+.process_left{ display:none; }
+
+.mob_home_icons{ display:block; }
+.leftBar_menu ul li ul li a span{ font-size:12px; }
+
+.mobile_pointer{ cursor:pointer; }
+
+.profile_popup_text a span, .profile_popup_user span, .profile_signOut a{ font-size:13px; } 
+.profile_popup_user a{ width:28px; height:28px; }
+
+.notification_popup_main{ width:290px; right:-144px; }
+ 
+html{ overflow-x:hidden; }
+.wrapper { overflow:hidden; }
+.header_right{ padding:10px; }
+
+ 
+.task_header{ padding-left:8px; padding-right:8px; }
+
+.notification_scroll{   overflow-y:auto; -webkit-overflow-scrolling: touch; }
+
+.formDesign_p1 .header{ position:fixed; }
+
+
+ 
+
+
+
+.middle_section{ padding-right:54px; }
+.add_element_list ul li{ width:100%; }
+.right_bar{ width:54px;  }
+
+.add_element_heading h5{ font-size:10px;  padding:5px; }
+.add_element_list{ padding:10px 5px;   }
+.form_manage_nav ul li.manage_nav_list{ padding-left:0px; padding-right:7px;   }
+.manage_settingsReview li a{ min-width:0; font-size:12px !important; }
+.manage_nav_undoRedo_box a{ width:30px; }
+.formDesign_title h5{ font-size:12px; }
+.sectionTitle h5{ font-size:12px; }
+.formSection{ padding:6px; }
+.form_rowHover{ padding:6px; }
+
+.formDesign_section .col6, .formDesign_section .col9{ width:100%; }
+.formDesign_section .col4{ width:100%; padding-bottom:10px; }
+.allField_titleCol{ width:100% !important; }
+.allField_titleCol .formHeading_20{ padding-top:0px; padding-left:10px;}
+
+.form_radio label em{ font-size:12px; }
+
+.tab_50{ width:50% !important; }
+.formDesign_section .form_heading strong, .formDesign_section .form_heading span, .formDesign_section .form_heading i{ padding-bottom:10px;}
+.upload_file_main ul li, .upload_file span{ font-size:12px; }
+.upload_file{ padding-top:5px; padding-bottom:5px; padding-right:70px; }
+.upload_file strong{ font-size:12px; padding:5px; width: 70px;  }
+.form_editRow{ padding-right:0px; }
+.form_rating ul{ margin:0px -4px; }
+.form_rating ul li{ padding:2px 4px; }
+.form_rating ul li a {  width:22px; height:22px; font-size:10px; line-height:19px;   } 
+.form_field input{ font-size:12px; padding:5px 10px; }
+.upload_picture{ height:100px; margin-bottom:10px; }
+ 
+.upload_picture span{ font-size:10px;  background-size: 30px auto; padding-top: 30px; margin-top: -22px; }
+.takePhoto_icon1, .takePhoto_icon3, .takePhoto_icon5{ background-size:16px auto; }
+.takePhoto_icon2, .takePhoto_icon4, .takePhoto_icon6{ background-size:14px auto; }
+.tableFeilds_heading h5{ font-size:12px; }
+.selectbox_dropdown li, .selectbox_span{ font-size:12px; padding:5px 10px; }
+ 
+ .selectbox_span, .selectbox{ height:32px;}
+ .selectbox::before{ padding:3px 0px; right: 8px; }
+
+.add_element_list ul li a{ text-align:center; }
+.add_element_list ul li a span{ display:none; }
+ .tableName_heading h5{ font-size:12px; }
+.form_rowHover_popup{ left:-8px; top:-40px; width:160px; padding:0px; border: 1px solid #e5e5e5; }
+.form_rowHover_popup ul{ width:100%; display:table; }
+.form_rowHover_popup ul li, .form_rowHover_popup ul li:last-child{ padding:10px; display:table-cell; vertical-align:middle; }
+.form_rowHover_popup ul li a img{ max-width:13px; }
+.form_manage_nav ul{ float:none; }
+.uploaded_field_delete{ background-size:10px auto; }
+.upload_file_main ul li{ padding-top:5px; padding-bottom:5px; }
+
+.addColumn_btn ul li{ padding:0px 4px; }
+.addColumn_btn ul li a{ padding:5px 4px; }
+
+.formDesign_nextBtn{ padding:15px 10px; }
+.all_buttons{ padding:5px 10px; min-width:180px; font-size:12px;  }
+.add_element_tip.active{ display:block; }
+
+
+
+
+/******popups mobile****/
+.popupTabs_show .col6, .popupTabs_show .col9, .popupTabs_show .col5, .popupTabs_show .col7{ width:100%; padding-bottom:10px;}
+	.allField_titleCol .form_heading strong{ padding-top:0px; padding-bottom:10px; }
+	.value_note p{ font-size:12px; }
+	.popupRow_hasTipIcon{ padding-right:40px; }
+	
+	.popupRow_hasTipIcon  .popupTooltip{ left:inherit; right:-10px; }
+	.popupRow_hasTipIcon  .popupTooltip:after{ left:inherit; right:10px; }
+
+	 .formRow{ padding-bottom:10px; }
+	.checkbox_listing .formCell.col3, .checkbox_listing .formCell.col5, .checkbox_listing .formCell.col2, .checkbox_listing .formCell.col4{ width:100% !important; }
+	.checkbox_listing .formCell .form_heading strong{ padding-top:10px !important;}
+	.form_checkbox label{ font-size:12px; }
+	.popup_header_left ul li{ padding:4px 6px;}
+	.popup_header_left ul li strong{ font-size:10px; }
+	.popup_auto{ padding:0px 10px; }
+	.popup_table{ padding:15px 0px; }
+	.popup_content{ padding:15px 10px; }
+	.popup_tabsTitle ul li a{ font-size:10px; padding:5px; }
+	.popup_tabsTitle ul li{ padding-right:0px; }
+	.entity_data_heading h5, .formula_heading h5{ font-size:12px; }
+	.value_search input{ font-size:12px; padding: 5px 10px; background-size:12px auto; }
+	.formula_heading{ padding: 5px 10px; }
+	.formula_detail label, .formula_detail span{ font-size:12px; }
+	.mce-btn button, .mce-ico{ font-size:12px !important; }
+	.property_checkMain{ padding-top:10px; }
+	.mce-btn button{ padding:0px 2px !important; }
+	.validate_note p, .validate_note ul li{ font-size:12px; }
+	.validate_note{ padding: 5px 10px; }
+
+	.checkbox_table .formCell.col3, .checkbox_table .formCell.col1{ width:50% !important; padding-bottom:10px;  }
+	.checkbox_action{ text-align:center;}
+	.checkbox_tableTile{ padding:10px; }
+
+
+}
+
+
+
+
+
+
+
+@media only screen 
+and (min-device-width : 375px) 
+and (max-device-width : 812px) 
+and (-webkit-device-pixel-ratio : 3)
+and (orientation : landscape) { 
+.auto_contant, .headerAutoContent{ padding-left:40px; padding-right:40px;  }
+ 
+.nav_header ul li{ margin-left:15px;   }
+.freetrial_left{ width:31%; }
+}
+
+
+
+ 
+
+
+

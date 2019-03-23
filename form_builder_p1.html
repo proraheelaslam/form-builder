@@ -1,0 +1,1934 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=0">
+    <title>Admin</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/responsive.css">
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script type="text/javascript" src="js/my_script.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.js"></script>
+    <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+
+    <script type="text/javascript" src="js/form_builder.js"></script>
+    <style>
+       /* .formRow{
+            display: -webkit-flex; !* Safari *!
+            -webkit-flex-direction: row-reverse; !* Safari 6.1+ *!
+            display: flex;
+            flex-direction: row-reverse;
+        }*/
+    </style>
+
+    <script>
+        (function ($) {
+            $(window).on("load", function () {
+              /*  $(".dropdown_scroll, .taskTab_show, .leftBar_detail, .add_element_inner").mCustomScrollbar({
+                    documentTouchScroll: true,
+                });*/
+                $(".auditContent_scroll").mCustomScrollbar({
+                    axis: "yx",
+                    scrollInertia: 250,
+                    documentTouchScroll: true,
+                });
+                $(".notification_scroll").mCustomScrollbar({
+                    scrollInertia: 250,
+                    documentTouchScroll: true,
+                });
+            });
+        })(jQuery);
+
+        $(function () {
+            $(".datepicker").datepicker();
+        });
+    </script>
+    <script>
+        /*setTimeout(function () {
+            tinymce.init({
+                selector: '.mytextarea',
+                branding: false,
+                theme: 'modern',
+                plugins: 'print preview fullpage powerpaste searchreplace autolink directionality advcode visualblocks visualchars fullscreen image link media mediaembed template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount tinymcespellchecker a11ychecker imagetools textpattern help formatpainter permanentpen pageembed tinycomments mentions linkchecker',
+                toolbar: 'fontselect | fontsizeselect color | bold italic strikethrough forecolor backcolor | alignleft aligncenter alignright alignjustify bullist numlist | link unlink image  | forecolor backcolor emoticons ',
+
+            });
+        },1000)*/
+    </script>
+</head>
+
+<body class="formDesign_p1">
+<div class="wrapper open_left_menu">
+    <div class="main clearfix">
+
+        <!--start header-->
+        <div class="header">
+            <div class="header_inner">
+                <div class="mob_home_icons clearfix">
+                    <ul>
+                        <li><a class="mob_menuIcon" href="javascript:void(0)"><img src="images/menutoggle_icon.png"
+                                                                                   alt="#"></a></li>
+                        <li><a class="mob_homeIcon" href="javascript:void(0)"><img src="images/home_icon_mobile.png"
+                                                                                   alt="#"></a></li>
+                        <li><a class="identification_icon" href="javascript:void(0)"><img
+                                src="images/identification.svg" alt="#"></a></li>
+                    </ul>
+                </div>
+                <div class="headerLeftBar clearfix">
+                    <div class="leftBar_logo"><a href="javascript:void(0);"><img src="images/logo1.svg" alt="#"></a>
+                    </div>
+                    <div class="menu_toggle"><a href="javascript:void(0);">&nbsp;</a></div>
+                </div>
+                <div class="headerRight">
+                    <div class="header_left">
+                        <div class="process_main">
+                            <div class="process_left"><a href="javascript:void(0);"><img src="images/home_icon.png"
+                                                                                         alt="#"></a></div>
+                            <div class="process_right">
+                                <div class="process_nav">
+                                    <ul>
+                                        <!--process_done-->
+                                        <li><a class="active"
+                                               href="javascript:void(0);"><i>1</i><span>Design Process</span></a></li>
+                                        <li><a class="" href="javascript:void(0);"><i>2</i><span>Desgin Forms</span></a>
+                                        </li>
+                                        <li><a href="javascript:void(0);"><i>3</i><span>Form Permission</span></a></li>
+                                        <li><a href="javascript:void(0);"><i>4</i><span>Configure Flows</span></a></li>
+                                        <li><a href="javascript:void(0);"><i>5</i><span>Validate Process</span></a></li>
+                                        <li><a href="javascript:void(0);"><i>6</i><span>Publish Process</span></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="header_right clearfix">
+                        <div class="headerRight_float">
+                            <div class="headerRight_inner">
+                                <div class="designHome_btn"><a href="javascript:void(0);">Design Home</a></div>
+                                <div class="setting_related">
+                                    <ul>
+                                        <li>
+                                            <div class="alert_notification"><a class="headerNav_icons notification_icon"
+                                                                               href="javascript:void(0);"></a>
+                                                <div class="notification_popup_main">
+                                                    <div class="notification_popup">
+                                                        <div class="notification_headerMain">
+                                                            <div class="notification_header clearfix">
+                                                                <div class="notification_header_left">
+                                                                    <div class="notification_heading">
+                                                                        <h5>Notification</h5>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="notification_header_right"><a
+                                                                        class="dismiss_text" href="javascript:void(0);">Dismiss
+                                                                    All</a></div>
+                                                                <div class="notification_close"></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="notification_content notification_scroll">
+                                                            <div class="notification_list">
+                                                                <ul>
+                                                                    <li>
+                                                                        <div class="notification_detail">
+                                                                            <div class="notification_detailTop clearfix">
+                                                                                <div class="notification_left">
+                                                                                    <div class="notification_text">
+                                                                                        <span>Process Name</span> <span>Entity Name Company</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="notification_right">
+                                                                                    <div class="notification_text">
+                                                                                        <small>Tue 2018-05-06</small>
+                                                                                        <a class="dismiss_text"
+                                                                                           href="javascript:void(0);">Dismiss</a>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="notification_detail_img">
+                                                                                    <img src="images/copyicon.png"
+                                                                                         alt="#"></div>
+                                                                            </div>
+                                                                            <div class="notification_text">
+                                                                                <p>Message Detail this is Mike's
+                                                                                    comments. Could be
+                                                                                    quite a lines. So the scroll bar is
+                                                                                    definely necess...</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="notification_detail">
+                                                                            <div class="notification_detailTop clearfix">
+                                                                                <div class="notification_left">
+                                                                                    <div class="notification_text">
+                                                                                        <span>Process Name</span> <span>Entity Name Company</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="notification_right">
+                                                                                    <div class="notification_text">
+                                                                                        <small>Tue 2018-05-06</small>
+                                                                                        <a class="dismiss_text"
+                                                                                           href="javascript:void(0);">Dismiss</a>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="notification_detail_img">
+                                                                                    <img src="images/copyicon.png"
+                                                                                         alt="#"></div>
+                                                                            </div>
+                                                                            <div class="notification_text">
+                                                                                <p>Message Detail this is Mike's
+                                                                                    comments. Could be
+                                                                                    quite a lines. So the scroll bar is
+                                                                                    definely necess...</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="notification_detail">
+                                                                            <div class="notification_detailTop clearfix">
+                                                                                <div class="notification_left">
+                                                                                    <div class="notification_text">
+                                                                                        <span>Process Name</span> <span>Entity Name Company</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="notification_right">
+                                                                                    <div class="notification_text">
+                                                                                        <small>Tue 2018-05-06</small>
+                                                                                        <a class="dismiss_text"
+                                                                                           href="javascript:void(0);">Dismiss</a>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="notification_detail_img">
+                                                                                    <img src="images/copyicon.png"
+                                                                                         alt="#"></div>
+                                                                            </div>
+                                                                            <div class="notification_text">
+                                                                                <p>Message Detail this is Mike's
+                                                                                    comments. Could be
+                                                                                    quite a lines. So the scroll bar is
+                                                                                    definely necess...</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="notification_detail">
+                                                                            <div class="notification_detailTop clearfix">
+                                                                                <div class="notification_left">
+                                                                                    <div class="notification_text">
+                                                                                        <span>Process Name</span> <span>Entity Name Company</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="notification_right">
+                                                                                    <div class="notification_text">
+                                                                                        <small>Tue 2018-05-06</small>
+                                                                                        <a class="dismiss_text"
+                                                                                           href="javascript:void(0);">Dismiss</a>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="notification_detail_img">
+                                                                                    <img src="images/copyicon.png"
+                                                                                         alt="#"></div>
+                                                                            </div>
+                                                                            <div class="notification_text">
+                                                                                <p>Message Detail this is Mike's
+                                                                                    comments. Could be
+                                                                                    quite a lines. So the scroll bar is
+                                                                                    definely necess...</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="notification_detail">
+                                                                            <div class="notification_detailTop clearfix">
+                                                                                <div class="notification_left">
+                                                                                    <div class="notification_text">
+                                                                                        <span>Process Name</span> <span>Entity Name Company</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="notification_right">
+                                                                                    <div class="notification_text">
+                                                                                        <small>Tue 2018-05-06</small>
+                                                                                        <a class="dismiss_text"
+                                                                                           href="javascript:void(0);">Dismiss</a>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="notification_detail_img">
+                                                                                    <img src="images/copyicon.png"
+                                                                                         alt="#"></div>
+                                                                            </div>
+                                                                            <div class="notification_text">
+                                                                                <p>Message Detail this is Mike's
+                                                                                    comments. Could be
+                                                                                    quite a lines. So the scroll bar is
+                                                                                    definely necess...</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="notification_detail">
+                                                                            <div class="notification_detailTop clearfix">
+                                                                                <div class="notification_left">
+                                                                                    <div class="notification_text">
+                                                                                        <span>Process Name</span> <span>Entity Name Company</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="notification_right">
+                                                                                    <div class="notification_text">
+                                                                                        <small>Tue 2018-05-06</small>
+                                                                                        <a class="dismiss_text"
+                                                                                           href="javascript:void(0);">Dismiss</a>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="notification_detail_img">
+                                                                                    <img src="images/copyicon.png"
+                                                                                         alt="#"></div>
+                                                                            </div>
+                                                                            <div class="notification_text">
+                                                                                <p>Message Detail this is Mike's
+                                                                                    comments. Could be
+                                                                                    quite a lines. So the scroll bar is
+                                                                                    definely necess...</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="notification_detail">
+                                                                            <div class="notification_detailTop clearfix">
+                                                                                <div class="notification_left">
+                                                                                    <div class="notification_text">
+                                                                                        <span>Process Name</span> <span>Entity Name Company</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="notification_right">
+                                                                                    <div class="notification_text">
+                                                                                        <small>Tue 2018-05-06</small>
+                                                                                        <a class="dismiss_text"
+                                                                                           href="javascript:void(0);">Dismiss</a>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="notification_detail_img">
+                                                                                    <img src="images/copyicon.png"
+                                                                                         alt="#"></div>
+                                                                            </div>
+                                                                            <div class="notification_text">
+                                                                                <p>Message Detail this is Mike's
+                                                                                    comments. Could be
+                                                                                    quite a lines. So the scroll bar is
+                                                                                    definely necess...</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li><a class="headerNav_icons setting_icon" href="javascript:void(0);"></a></li>
+                                        <li><a class="headerNav_icons help_icon" href="javascript:void(0);"></a></li>
+                                    </ul>
+                                </div>
+                                <div class="user_profile"><a href="javascript:void(0);"><img src="images/person_img.png"
+                                                                                             alt="#"></a>
+                                    <div class="profile_popup">
+                                        <div class="notification_popup">
+                                            <div class="notification_headerMain">
+                                                <div class="notification_header clearfix">
+                                                    <div class="profile_popup_user"><a href="javascript:void(0);"><img
+                                                            src="images/person_img.png" alt="#"></a>
+                                                        <span>Steve Lee</span></div>
+                                                    <div class="notification_close"></div>
+                                                </div>
+                                            </div>
+                                            <div class="notification_content">
+                                                <div class="profile_popup_detail">
+                                                    <ul>
+                                                        <li>
+                                                            <div class="profile_popup_text"><a
+                                                                    href="javascript:void(0);"><i><img
+                                                                    src=""
+                                                                    alt="#"></i><span>My Profile</span></a></div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="profile_popup_text"><a
+                                                                    href="javascript:void(0);"><i><img
+                                                                    src=""
+                                                                    alt="#"></i><span>Manage Subscription</span></a>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="notification_footer">
+                                                <div class="profile_signOut"><a href="javascript:void(0);">Sign Out</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end header-->
+        <div class="content_main">
+            <!--start left bar-->
+            <div class="left_bar allTasks_leftBar">
+                <div class="leftBar_inner">
+                    <div class="leftBar_detail">
+                        <div class="leftBar_menu">
+                            <ul>
+                                <li><a href="javascript:void(0);"><i><img src="images/all_tasks_icon.png"
+                                                                          alt="#"></i><span>All User Tasks In This Process</span></a>
+                                    <ul>
+                                        <li><a href="javascript:void(0);"><em>1</em><span>Generate Audit Task</span></a>
+                                        </li>
+                                        <li><a class="active"
+                                               href="javascript:void(0);"><em>2</em><span>Garry Out Audit</span></a>
+                                        </li>
+                                        <li><a href="javascript:void(0);"><em>3</em><span>Issue Certificate</span></a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end left bar-->
+
+            <!--start right content-->
+            <div class="right_content">
+                <div class="form_design_main">
+                    <div class="form_design_inner">
+                        <div class="middle_section">
+                            <div class="middle_section_inner">
+                                <div class="audit_bar">
+                                    <div class="auditBar_inner clearfix">
+                                        <div class="auditBar_left">
+                                            <div class="auditBar_text">
+                                                <p><b>Franchise Audit</b><span>Version 2</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="auditBar_right clearfix">
+                                            <div class="form_manage_main">
+                                                <div class="form_manage_nav clearfix">
+                                                    <ul>
+                                                        <li class="manage_nav_list">
+                                                            <ul class="grayBg manage_nav_undoRedo_box">
+                                                                <li>
+                                                                    <div class="setting_onOff">
+                                                                        <div class="onoffswitch">
+                                                                            <input type="checkbox" name="onoffswitch"
+                                                                                   class="onoffswitch-checkbox"
+                                                                                   id="myonoffswitch1" checked="">
+                                                                            <label class="onoffswitch-label"
+                                                                                   for="myonoffswitch1"> <span
+                                                                                    class="onoffswitch-inner"></span>
+                                                                                <span class="onoffswitch-switch"></span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li><a class="manage_nav_move_btn"
+                                                                       href="javascript:void(0);"></a></li>
+                                                                <li><a class="manage_nav_redo_btn"
+                                                                       href="javascript:void(0);"></a></li>
+                                                                <li><a class="manage_nav_undo_btn"
+                                                                       href="javascript:void(0);"></a></li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="manage_nav_list manage_settingsReview">
+                                                            <ul>
+                                                                <li><a href="javascript:void(0);">Form Setting</a></li>
+                                                                <li><a href="javascript:void(0);">Preview</a></li>
+                                                                <li><a href="javascript:void(0);">Save</a></li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="formDesign_section">
+                                    <div class="formDesign_title">
+                                        <h5>Form Title</h5>
+                                    </div>
+                                    <div class="formSection_main">
+                                        <div class="formSection">
+                                            <div class="formParent" id="dropForm">
+                                                <div class="form_rowHover">
+                                                    <div id="formBuilder"></div>
+                                                    <ul class="frmb"></ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="right_bar">
+                            <div class="add_element_main">
+                                <div class="add_element_heading">
+                                    <h5>Add Form Element</h5>
+                                </div>
+                                <div class="add_element_inner">
+                                    <div class="add_element_list">
+                                        <ul>
+                                            <!--<li><a href="javascript:void(0);"><i><img src="images/rightbar_icon1.png"
+                                                                                      alt="#"></i><span>Section Title</span></a>
+                                            </li>
+                                            <li><a href="javascript:void(0);"><i><img src="images/rightbar_icon2.png"
+                                                                                      alt="#"></i><span>Lookup</span></a>
+                                            </li>
+                                            <li><a href="javascript:void(0);"><i><img src="images/rightbar_icon3.png"
+                                                                                      alt="#"></i><span>Next Page Button</span></a>
+                                            </li>
+                                            <li><a href="javascript:void(0);"><i><img src="images/rightbar_icon4.png"
+                                                                                      alt="#"></i><span>Upload File</span></a>
+                                            </li>
+                                            <li><a href="javascript:void(0);"><i><img src="images/rightbar_icon5.png"
+                                                                                      alt="#"></i><span>Number</span></a>
+                                            </li>
+                                            <li><a href="javascript:void(0);"><i><img src="images/rightbar_icon6.png"
+                                                                                      alt="#"></i><span>Upload Picture</span></a>
+                                            </li>
+                                            <li><a href="javascript:void(0);"><i><img src="images/rightbar_icon7.png"
+                                                                                      alt="#"></i><span>Date</span></a>
+                                            </li>
+                                            <li><a href="javascript:void(0);"><i><img src="images/rightbar_icon8.png"
+                                                                                      alt="#"></i><span>Upload Video</span></a>
+                                            </li>
+                                            <li><a href="javascript:void(0);"><i><img src="images/rightbar_icon9.png"
+                                                                                      alt="#"></i><span>Text Area</span></a>
+                                            </li>
+                                            <li><a href="javascript:void(0);"><i><img src="images/rightbar_icon10.png"
+                                                                                      alt="#"></i><span>Take Photo</span></a>
+                                            </li>
+                                            <li><a href="javascript:void(0);"><i><img src="images/rightbar_icon11.png"
+                                                                                      alt="#"></i><span>Text Field</span></a>
+                                            </li>
+                                            <li><a href="javascript:void(0);"><i><img src="images/rightbar_icon12.png"
+                                                                                      alt="#"></i><span>Signature</span></a>
+                                            </li>
+                                            <li><a href="javascript:void(0);"><i><img src="images/rightbar_icon13.png"
+                                                                                      alt="#"></i><span>Checkbox</span></a>
+                                            </li>
+                                            <li><a href="javascript:void(0);"><i><img src="images/rightbar_icon14.png"
+                                                                                      alt="#"></i><span>LInk</span></a>
+                                            </li>
+                                            <li><a href="javascript:void(0);"><i><img src="images/rightbar_icon15.png"
+                                                                                      alt="#"></i><span>Option List</span></a>
+                                            </li>
+                                            <li><a href="javascript:void(0);"><i><img src="images/rightbar_icon16.png"
+                                                                                      alt="#"></i><span>Table</span></a>
+                                            </li>
+                                            <li><a href="javascript:void(0);"><i><img src="images/rightbar_icon17.png"
+                                                                                      alt="#"></i><span>Rating</span></a>
+                                            </li>
+                                            <li><a href="javascript:void(0);"><i><img src="images/rightbar_icon18.png"
+                                                                                      alt="#"></i><span>Location</span></a>
+                                            </li>-->
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <em class="add_element_tip"><em class="add_element_tipText">Section Title</em></em>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end right content-->
+
+        </div>
+    </div>
+
+
+    <!--<div class="all_popup formEdit_main_popup">
+        <div class="all_popup_inner">
+            <div class="popup_table">
+                <div class="popup_tableCell">
+                    <div class="popup_auto">
+                        <div class="popup_detail">
+                            <div class="all_popup_header clearfix">
+                                <div class="popup_header_left">
+                                    <ul>
+                                        <li><strong>Field Setting: </strong></li>
+                                        <li><strong>Field Type: <span>Number Field</span></strong></li>
+                                        <li><strong>Field Name: <span>Total Rating</span></strong></li>
+                                    </ul>
+                                </div>
+                                <div class="popup_close"></div>
+                            </div>
+                            <div class="popup_content">
+                                <div class="popup_tabs_main">
+                                    <div class="popup_tabsTitle">
+                                        <ul>
+                                            <li><a class="active" href="#popupTab_1">Basic Property</a></li>
+                                            <li><a href="#popupTab_7">Checkbox</a></li>
+                                            <li><a href="#popupTab_2">Validate and Message</a></li>
+                                            <li><a href="#popupTab_3">Format</a></li>
+                                            <li><a href="#popupTab_4">Value Setting</a></li>
+                                            <li><a href="#popupTab_5">Report Setting</a></li>
+                                            <li><a href="#popupTab_6">Help Message</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="popupTabs_detail">
+                                        <div class="popupTabs_show" id="popupTab_1" style="display:block;">
+                                            <div class="property_main">
+                                                <div class="formParent">
+                                                    <div class="formRow clearfix">
+                                                        <div class="formCell col3 allField_titleCol">
+                                                            <div class="form_heading"><strong>Field Name</strong></div>
+                                                        </div>
+                                                        <div class="formCell col9">
+                                                            <div class="form_field">
+                                                                <input type="text" placeholder="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="formRow clearfix">
+                                                        <div class="formCell col3 allField_titleCol">
+                                                            <div class="form_heading"><strong class="feild_id">Field Id
+
+                                                                <em class="popupTooltip_icon">
+                                                                    <em class="popupTooltip">Lorem Ipsum dummy site amet
+                                                                        tooltip Lorem Ipsum dummy site amet tooltip</em>
+                                                                </em>
+
+                                                            </strong></div>
+                                                        </div>
+                                                        <div class="formCell col9">
+                                                            <div class="form_field">
+                                                                <input type="text" placeholder="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="formRow clearfix">
+                                                        <div class="formCell col3 allField_titleCol">
+                                                            <div class="form_heading"><strong>Default Value</strong>
+                                                            </div>
+                                                        </div>
+                                                        <div class="formCell col9">
+                                                            <div class="form_field">
+                                                                <input type="text" placeholder="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="formRow clearfix">
+                                                        <div class="formCell col3 allField_titleCol">
+                                                            <div class="form_heading"><strong>Place Hold</strong></div>
+                                                        </div>
+                                                        <div class="formCell col9">
+                                                            <div class="form_field">
+                                                                <input type="text" placeholder="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    &lt;!&ndash;4._Form_Basic_Checkboxoption&ndash;&gt;
+                                                    <div class="alignment_form">
+                                                        <div class="formRow clearfix">
+                                                            <div class="formCell col3 allField_titleCol">
+                                                                <div class="form_heading"><strong>Alignment</strong>
+                                                                </div>
+                                                            </div>
+                                                            <div class="formCell col5">
+                                                                <div class="form_field">
+                                                                    <div class="selectbox"><span
+                                                                            class="selectbox_span"></span>
+                                                                        <ul class="selectbox_dropdown dropdown_scroll"
+                                                                            style="display: none;">
+                                                                            <li class="">Horizontal</li>
+                                                                            <li class="">Vertical</li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="formRow clearfix">
+                                                            <div class="formCell col3 allField_titleCol">
+                                                                <div class="form_heading"><strong>Number of
+                                                                    Columns</strong></div>
+                                                            </div>
+                                                            <div class="formCell col5">
+                                                                <div class="form_field">
+                                                                    <div class="selectbox"><span
+                                                                            class="selectbox_span"></span>
+                                                                        <ul class="selectbox_dropdown dropdown_scroll"
+                                                                            style="display: none;">
+                                                                            <li class="">1</li>
+                                                                            <li class="">2</li>
+                                                                            <li class="">3</li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    &lt;!&ndash;4._Form_Basic_Checkboxoption&ndash;&gt;
+
+                                                    &lt;!&ndash;6._Form_Basic_Rating&ndash;&gt;
+                                                    <div class="alignment_form">
+                                                        <div class="formRow clearfix">
+                                                            <div class="formCell col3 allField_titleCol">
+                                                                <div class="form_heading"><strong>Scale Range</strong>
+                                                                </div>
+                                                            </div>
+                                                            <div class="formCell col5">
+                                                                <div class="form_field">
+                                                                    <div class="selectbox"><span
+                                                                            class="selectbox_span"></span>
+                                                                        <ul class="selectbox_dropdown dropdown_scroll"
+                                                                            style="display: none;">
+                                                                            <li class="">1-10</li>
+                                                                            <li class="">1-11</li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="formRow clearfix">
+                                                            <div class="formCell col3 allField_titleCol">
+                                                                <div class="form_heading"><strong>Default Value</strong>
+                                                                </div>
+                                                            </div>
+                                                            <div class="formCell col5">
+                                                                <div class="form_field">
+                                                                    <div class="selectbox"><span
+                                                                            class="selectbox_span"></span>
+                                                                        <ul class="selectbox_dropdown dropdown_scroll"
+                                                                            style="display: none;">
+                                                                            <li class="">N/A</li>
+                                                                            <li class="">N/A</li>
+                                                                            <li class="">N/A</li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    &lt;!&ndash;6._Form_Basic_Rating&ndash;&gt;
+
+                                                    &lt;!&ndash;checkboxes&ndash;&gt;
+                                                    <div class="formRow clearfix">
+                                                        <div class="formCell col3 allField_titleCol">
+                                                            <div class="form_heading"></div>
+                                                        </div>
+                                                        <div class="formCell col9 pull_right">
+                                                            <div class="property_checkMain">
+                                                                <div class="formRow clearfix">
+                                                                    <div class="formCell col6">
+                                                                        <div class="form_checkbox">
+                                                                            <label>
+                                                                                Required
+                                                                                <input type="checkbox">
+                                                                                <span class="checkbox_checked"></span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="formCell col6">
+                                                                        <div class="form_checkbox">
+                                                                            <label>
+                                                                                View Only
+                                                                                <input type="checkbox">
+                                                                                <span class="checkbox_checked"></span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="formRow clearfix">
+                                                                    <div class="formCell col6">
+                                                                        <div class="form_checkbox">
+                                                                            <label>
+                                                                                Hide Label
+                                                                                <input type="checkbox">
+                                                                                <span class="checkbox_checked"></span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="formCell col6">
+                                                                        <div class="form_checkbox">
+                                                                            <label>
+                                                                                Hide Field
+                                                                                <input type="checkbox">
+                                                                                <span class="checkbox_checked"></span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="formRow clearfix">
+                                                                    <div class="formCell col6">
+                                                                        <div class="form_checkbox">
+                                                                            <label>
+                                                                                Add Picture
+                                                                                <input type="checkbox">
+                                                                                <span class="checkbox_checked"></span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="formCell col6">
+                                                                        <div class="form_checkbox">
+                                                                            <label>
+                                                                                Add Notes
+                                                                                <input type="checkbox">
+                                                                                <span class="checkbox_checked"></span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="formRow clearfix">
+                                                                    <div class="formCell col6">
+                                                                        <div class="form_checkbox">
+                                                                            <label>
+                                                                                Field Under Lable
+                                                                                <input type="checkbox">
+                                                                                <span class="checkbox_checked"></span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="formCell col6">
+                                                                        <div class="form_checkbox">
+                                                                            <label>
+                                                                                Exclude From PDF Report
+                                                                                <input type="checkbox">
+                                                                                <span class="checkbox_checked"></span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="formRow clearfix">
+                                                                    <div class="formCell col6">
+                                                                        <div class="form_checkbox">
+                                                                            <label>
+                                                                                Is Preloaded Paragraph?
+                                                                                <input type="checkbox">
+                                                                                <span class="checkbox_checked"></span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="formCell col6">
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    &lt;!&ndash;checkboxes&ndash;&gt;
+                                                    <div class="formRow clearfix">
+                                                        <div class="formCell col12">
+                                                            <div class="form_saveBtn">
+                                                                <input class="all_buttons" type="submit" value="Save">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="popupTabs_show" id="popupTab_2">
+                                            <div class="validate_main">
+
+                                                &lt;!&ndash;10._Form_Validate-Text&ndash;&gt;
+                                                <div class="validate_text">
+                                                    <div class="formRow clearfix">
+                                                        <div class="formCell col3 allField_titleCol">
+                                                            <div class="form_heading"><strong>Default Value</strong>
+                                                            </div>
+                                                        </div>
+                                                        <div class="formCell col9">
+                                                            <div class="form_field">
+                                                                <div class="selectbox"><span
+                                                                        class="selectbox_span"></span>
+                                                                    <ul class="selectbox_dropdown dropdown_scroll"
+                                                                        style="display: none;">
+                                                                        <li class="">Match Regular Expression</li>
+                                                                        <li class="">N/A</li>
+                                                                        <li class="">N/A</li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="formRow clearfix">
+                                                        <div class="formCell col3 allField_titleCol">
+                                                            <div class="form_heading"><strong>Regular
+                                                                Expression</strong></div>
+                                                        </div>
+                                                        <div class="formCell col9">
+                                                            <div class="form_field">
+                                                                <input type="text" placeholder="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="formRow clearfix">
+                                                        <div class="formCell col3 allField_titleCol">
+                                                            <div class="form_heading"><strong>Error Massage</strong>
+                                                            </div>
+                                                        </div>
+                                                        <div class="formCell col9">
+                                                            <div class="form_field">
+                                                                <textarea placeholder=""></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="formRow clearfix">
+                                                        <div class="formCell col3 allField_titleCol">
+                                                            <div class="form_heading"><strong>Note</strong></div>
+                                                        </div>
+                                                        <div class="formCell col9">
+                                                            <div class="validate_note">
+                                                                <p>Regular expression allows you to limit what can be
+                                                                    inputed, for example if only email format is
+                                                                    allowed, put the following in Regular Expression
+                                                                    field above.</p>
+                                                                <p>
+                                                                    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)
+                                                                    +[a-zA-Z]{2,}))$/ </p>
+                                                                <p>Other examples may be :</p>
+                                                                <ul>
+                                                                    <li>Capital letters only [A-Z\s]+</li>
+                                                                    <li>lowercase only [a-z\s]+</li>
+                                                                    <li></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                &lt;!&ndash;10._Form_Validate-Text&ndash;&gt;
+
+                                                &lt;!&ndash;11.Form_Validate-Number&ndash;&gt;
+                                                <div class="validate_number">
+                                                    <div class="formRow clearfix">
+                                                        <div class="formCell col3 allField_titleCol">
+                                                            <div class="form_heading"><strong>Data Type</strong></div>
+                                                        </div>
+                                                        <div class="formCell col9">
+                                                            <div class="form_field">
+                                                                <div class="selectbox"><span
+                                                                        class="selectbox_span"></span>
+                                                                    <ul class="selectbox_dropdown dropdown_scroll"
+                                                                        style="display: none;">
+                                                                        <li class="">Integer Only</li>
+                                                                        <li class="">N/A</li>
+                                                                        <li class="">N/A</li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="formRow clearfix">
+                                                        <div class="formCell col3 allField_titleCol">
+                                                            <div class="form_heading"><strong>Date Type Error
+                                                                Massage</strong></div>
+                                                        </div>
+                                                        <div class="formCell col9">
+                                                            <div class="form_field">
+                                                                <textarea
+                                                                        placeholder="PLease enter integer only"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="formRow clearfix">
+                                                        <div class="formCell col3 allField_titleCol">
+                                                            <div class="form_heading"><strong>Number Limite</strong>
+                                                            </div>
+                                                        </div>
+                                                        <div class="formCell col9">
+                                                            <div class="formRow clearfix">
+                                                                <div class="formCell col7">
+                                                                    <div class="formRow clearfix">
+                                                                        <div class="formCell col6 tab_50">
+                                                                            <div class="selectbox"><span
+                                                                                    class="selectbox_span"></span>
+                                                                                <ul class="selectbox_dropdown dropdown_scroll"
+                                                                                    style="display: none;">
+                                                                                    <li class="">Between</li>
+                                                                                    <li class="">N/A</li>
+                                                                                    <li class="">N/A</li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="formCell col6 tab_50">
+                                                                            <div class="form_field">
+                                                                                <input class="datepicker" type="text"
+                                                                                       placeholder="From">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="formCell col5">
+                                                                    <div class="formRow clearfix">
+                                                                        <div class="formCell col2 allField_titleCol">
+                                                                            <div class="form_heading">
+                                                                                <strong>And</strong></div>
+                                                                        </div>
+                                                                        <div class="formCell col10">
+                                                                            <div class="form_field">
+                                                                                <input class="datepicker" type="text"
+                                                                                       placeholder="To">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="formRow clearfix">
+                                                        <div class="formCell col3 allField_titleCol">
+                                                            <div class="form_heading"><strong>Number Limite Error
+                                                                Massage</strong></div>
+                                                        </div>
+                                                        <div class="formCell col9">
+                                                            <div class="form_field">
+                                                                <textarea
+                                                                        placeholder="PLease enter integer between 1000 and 2000"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                &lt;!&ndash;11.Form_Validate-Number&ndash;&gt;
+
+                                                &lt;!&ndash;12.Form_Validate-Date&ndash;&gt;
+                                                <div class="validate_number validate_date">
+                                                    <div class="formRow clearfix">
+                                                        <div class="formCell col3 allField_titleCol">
+                                                            <div class="form_heading"><strong>Date Range</strong></div>
+                                                        </div>
+                                                        <div class="formCell col9">
+                                                            <div class="formRow clearfix">
+                                                                <div class="formCell col7 ">
+                                                                    <div class="formRow clearfix">
+                                                                        <div class="formCell col6 tab_50">
+                                                                            <div class="selectbox"><span
+                                                                                    class="selectbox_span"></span>
+                                                                                <ul class="selectbox_dropdown dropdown_scroll"
+                                                                                    style="display: none;">
+                                                                                    <li class="">Between</li>
+                                                                                    <li class="">N/A</li>
+                                                                                    <li class="">N/A</li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="formCell col6 tab_50">
+                                                                            <div class="form_field">
+                                                                                <input class="datepicker" type="text"
+                                                                                       placeholder="From">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="formCell col5">
+                                                                    <div class="formRow clearfix">
+                                                                        <div class="formCell col2 allField_titleCol">
+                                                                            <div class="form_heading">
+                                                                                <strong>And</strong></div>
+                                                                        </div>
+                                                                        <div class="formCell col10">
+                                                                            <div class="form_field">
+                                                                                <input class="datepicker" type="text"
+                                                                                       placeholder="To">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="formRow clearfix">
+                                                        <div class="formCell col3 allField_titleCol">
+                                                            <div class="form_heading"><strong>Error Massage</strong>
+                                                            </div>
+                                                        </div>
+                                                        <div class="formCell col9">
+                                                            <div class="form_field">
+                                                                <textarea
+                                                                        placeholder="PLease enter your date between 2018-12-01 and 2018-12-30"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                &lt;!&ndash;12.Form_Validate-Date&ndash;&gt;
+
+                                                <div class="formRow clearfix">
+                                                    <div class="formCell col12">
+                                                        <div class="form_saveBtn">
+                                                            <input class="all_buttons" type="submit" value="Save">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="popupTabs_show" id="popupTab_3">
+                                            <div class="format_main">
+                                                <div class="formParent">
+                                                    <div class="formRow clearfix">
+                                                        <div class="formCell col3 allField_titleCol">
+                                                            <div class="form_heading"><strong>Label Name Format</strong>
+                                                            </div>
+                                                        </div>
+                                                        <div class="formCell col9">
+                                                            <div class="container pb-5">
+                                                                <form method="post">
+                                                                    <textarea class="mytextarea"
+                                                                              placeholder="Label Name"></textarea>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="formRow clearfix">
+                                                        <div class="formCell col3 allField_titleCol">
+                                                            <div class="form_heading"><strong>Input Field Name</strong>
+                                                            </div>
+                                                        </div>
+                                                        <div class="formCell col9">
+                                                            <div class="container pb-5">
+                                                                <form method="post">
+                                                                    <textarea class="mytextarea"
+                                                                              placeholder="Input Field Name"></textarea>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="formRow clearfix">
+                                                        <div class="formCell col12">
+                                                            <div class="form_saveBtn">
+                                                                <input class="all_buttons" type="submit" value="Save">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="popupTabs_show" id="popupTab_4">
+                                            <div class="value_setting_main">
+                                                <div class="value_note">
+                                                    <p><b>Note: </b>The field value can be preset in the following ways
+                                                        if needed</p>
+                                                </div>
+
+                                                &lt;!&ndash;19.Form_Field_Value_Setting6&ndash;&gt;
+                                                <div class="value_setting_six">
+                                                    <div class="formParent">
+                                                        <div class="formRow clearfix">
+                                                            <div class="formCell col3 allField_titleCol">
+                                                                <div class="form_heading"><strong>Value Setting
+                                                                    Options </strong></div>
+                                                            </div>
+                                                            <div class="formCell col6">
+                                                                <div class="form_field">
+                                                                    <div class="selectbox"><span
+                                                                            class="selectbox_span"></span>
+                                                                        <ul class="selectbox_dropdown dropdown_scroll"
+                                                                            style="display: none;">
+                                                                            <li class=""> This Field Use a Dropdown List
+                                                                                from a System Variable
+                                                                            </li>
+                                                                            <li class="">Default Setting</li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="formRow clearfix">
+                                                            <div class="formCell col3 allField_titleCol">
+                                                                <div class="form_heading"><strong>Select System Database
+                                                                    Table</strong></div>
+                                                            </div>
+                                                            <div class="formCell col6">
+                                                                <div class="form_field">
+                                                                    <div class="selectbox"><span
+                                                                            class="selectbox_span"></span>
+                                                                        <ul class="selectbox_dropdown dropdown_scroll"
+                                                                            style="display: none;">
+                                                                            <li class="">Search System  Variable
+                                                                                Database Table
+                                                                            </li>
+                                                                            <li class="">Default Setting</li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="formRow clearfix">
+                                                            <div class="formCell col3 allField_titleCol">
+                                                                <div class="form_heading"><strong>Select Column In The
+                                                                    Database</strong></div>
+                                                            </div>
+                                                            <div class="formCell col6">
+                                                                <div class="form_field">
+                                                                    <div class="selectbox"><span
+                                                                            class="selectbox_span"></span>
+                                                                        <ul class="selectbox_dropdown dropdown_scroll"
+                                                                            style="display: none;">
+                                                                            <li class="">Search Field From System
+                                                                                Database
+                                                                            </li>
+                                                                            <li class="">Default Setting</li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="formRow clearfix">
+                                                            <div class="value_note text_center">
+                                                                <p><b>Note: </b>final value is an array list derived
+                                                                    from the selected column in selected database table
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                &lt;!&ndash;19.Form_Field_Value_Setting6&ndash;&gt;
+
+                                                &lt;!&ndash;14_Form_Field_Value_Setting1&ndash;&gt;
+                                                <div class="value_setting_one">
+                                                    <div class="formParent">
+                                                        <div class="formRow clearfix">
+                                                            <div class="formCell col3 allField_titleCol">
+                                                                <div class="form_heading"><strong>Value Setting
+                                                                    Options</strong></div>
+                                                            </div>
+                                                            <div class="formCell col6">
+                                                                <div class="form_field">
+                                                                    <div class="selectbox"><span
+                                                                            class="selectbox_span"></span>
+                                                                        <ul class="selectbox_dropdown dropdown_scroll"
+                                                                            style="display: none;">
+                                                                            <li class="">None</li>
+                                                                            <li class="">This field has a calculated
+                                                                                value
+                                                                            </li>
+                                                                            <li class="">This field is pre-populated
+                                                                                with a user or entity data
+                                                                            </li>
+                                                                            <li class="">This field is pre-populated
+                                                                                with a system variable
+                                                                            </li>
+                                                                            <li class="">This field is pre-populated
+                                                                                with the process forms variable
+                                                                            </li>
+                                                                            <li class="">This field use a dropdown from
+                                                                                a system variable
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                &lt;!&ndash;14_Form_Field_Value_Setting1&ndash;&gt;
+
+                                                &lt;!&ndash;17.Form_Field_Value_Setting4&ndash;&gt;
+                                                <div class="value_setting_four">
+                                                    <div class="formParent">
+                                                        <div class="formRow clearfix">
+                                                            <div class="formCell col3 allField_titleCol">
+                                                                <div class="form_heading"><strong>Value Setting
+                                                                    Options</strong></div>
+                                                            </div>
+                                                            <div class="formCell col6">
+                                                                <div class="form_field">
+                                                                    <div class="selectbox"><span
+                                                                            class="selectbox_span"></span>
+                                                                        <ul class="selectbox_dropdown dropdown_scroll"
+                                                                            style="display: none;">
+                                                                            <li class="">This Field Value is
+                                                                                Pre-populated With a System Variable
+                                                                            </li>
+                                                                            <li class="">N/A</li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="formRow clearfix">
+                                                            <div class="formCell col3 allField_titleCol">
+                                                                <div class="form_heading"><strong>Select System
+                                                                    Database</strong></div>
+                                                            </div>
+                                                            <div class="formCell col6">
+                                                                <div class="form_field">
+                                                                    <div class="selectbox"><span
+                                                                            class="selectbox_span"></span>
+                                                                        <ul class="selectbox_dropdown dropdown_scroll"
+                                                                            style="display: none;">
+                                                                            <li class="">Search System Variable Data
+                                                                                Table
+                                                                            </li>
+                                                                            <li class="">N/A</li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="formRow clearfix">
+                                                            <div class="formCell col3 allField_titleCol">
+                                                                <div class="form_heading"><strong>Select Field In
+                                                                    Database Table</strong></div>
+                                                            </div>
+                                                            <div class="formCell col6">
+                                                                <div class="form_field">
+                                                                    <div class="selectbox"><span
+                                                                            class="selectbox_span"></span>
+                                                                        <ul class="selectbox_dropdown dropdown_scroll"
+                                                                            style="display: none;">
+                                                                            <li class="">Search Field From System Data
+                                                                                Table
+                                                                            </li>
+                                                                            <li class="">N/A</li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="formRow clearfix">
+                                                            <div class="formCell col3 allField_titleCol">
+                                                                <div class="form_heading"><strong class="feild_id">Select
+                                                                    Matching Key Field<em class="popupTooltip_icon">
+                                                                        <em class="popupTooltip">Lorem Ipsum dummy site
+                                                                            amet tooltip Lorem Ipsum dummy site amet
+                                                                            tooltip</em>
+                                                                    </em></strong></div>
+                                                            </div>
+                                                            <div class="formCell col6">
+                                                                <div class="form_field">
+                                                                    <div class="selectbox"><span
+                                                                            class="selectbox_span"></span>
+                                                                        <ul class="selectbox_dropdown dropdown_scroll"
+                                                                            style="display: none;">
+                                                                            <li class="">Select Field As Matching Key In
+                                                                                Process
+                                                                            </li>
+                                                                            <li class="">N/A</li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="formRow clearfix">
+                                                            <div class="formCell col3 allField_titleCol">
+
+                                                            </div>
+                                                            <div class="formCell col9 pull_right">
+                                                                <div class="value_note">
+                                                                    <p><b>Note: </b>final value of this field is the
+                                                                        database value of the selected system data table
+                                                                        that has the matching key
+                                                                        as the ID in the data table</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                &lt;!&ndash;17.Form_Field_Value_Setting4&ndash;&gt;
+
+                                                &lt;!&ndash;18.Form_Field_Value_Settign5&ndash;&gt;
+                                                <div class="value_setting_five">
+                                                    <div class="formParent">
+                                                        <div class="formRow clearfix">
+                                                            <div class="formCell col3 allField_titleCol">
+                                                                <div class="form_heading"><strong>Value Setting
+                                                                    Options</strong></div>
+                                                            </div>
+                                                            <div class="formCell col6">
+                                                                <div class="form_field">
+                                                                    <div class="selectbox"><span
+                                                                            class="selectbox_span"></span>
+                                                                        <ul class="selectbox_dropdown dropdown_scroll"
+                                                                            style="display: none;">
+                                                                            <li class="">This Field Value is
+                                                                                Pre-populated With a Process Forms
+                                                                                Variable
+                                                                            </li>
+                                                                            <li class="">N/A</li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="formRow clearfix">
+                                                            <div class="formCell col3 allField_titleCol">
+                                                                <div class="form_heading"><strong>Select Variable from
+                                                                    this Process</strong></div>
+                                                            </div>
+                                                            <div class="formCell col6 popupRow_hasTipIcon">
+                                                                <div class="form_field feild_id">
+                                                                    <div class="selectbox"><span
+                                                                            class="selectbox_span"></span>
+                                                                        <ul class="selectbox_dropdown dropdown_scroll"
+                                                                            style="display: none;">
+                                                                            <li class="">Select Field As Matching Key In
+                                                                                Process
+                                                                            </li>
+                                                                            <li class="">N/A</li>
+                                                                        </ul>
+                                                                    </div>
+                                                                    <em class="popupTooltip_icon">
+                                                                        <em class="popupTooltip">Lorem Ipsum dummy site
+                                                                            amet tooltip Lorem Ipsum dummy site amet
+                                                                            tooltip</em>
+                                                                    </em>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="formRow clearfix">
+                                                            <div class="value_note text_center">
+                                                                <p><b>Note: </b>This field uses the value of the
+                                                                    selected field already in the form or previous task
+                                                                    form</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                &lt;!&ndash;18.Form_Field_Value_Settign5&ndash;&gt;
+
+                                                &lt;!&ndash;15._Form_Field_Value_Setting2&ndash;&gt;
+                                                <div class="value_setting_two">
+                                                    <div class="formParent">
+                                                        <div class="formRow clearfix">
+                                                            <div class="formCell col3 allField_titleCol">
+                                                                <div class="form_heading"><strong>Value Setting
+                                                                    Options</strong></div>
+                                                            </div>
+                                                            <div class="formCell col6">
+                                                                <div class="form_field">
+                                                                    <div class="selectbox"><span
+                                                                            class="selectbox_span"></span>
+                                                                        <ul class="selectbox_dropdown dropdown_scroll"
+                                                                            style="display: none;">
+                                                                            <li class="">This Field Value Has a
+                                                                                Calculated Value
+                                                                            </li>
+                                                                            <li class="">N/A</li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="formRow clearfix">
+                                                            <div class="formCell col9 pull_right">
+                                                                <div class="formRow clearfix">
+                                                                    <div class="formCell col5">
+                                                                        <div class="form_field">
+                                                                            <div class="selectbox"><span
+                                                                                    class="selectbox_span"></span>
+                                                                                <ul class="selectbox_dropdown dropdown_scroll"
+                                                                                    style="display: none;">
+                                                                                    <li class="">This Field Value Has a
+                                                                                        Calculated Value
+                                                                                    </li>
+                                                                                    <li class="">N/A</li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="value_search_main">
+                                                                            <div class="value_search">
+                                                                                <input class="searchtags" type="text"
+                                                                                       placeholder="Search Variables for Calcuation.">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="formCell col7">
+                                                                        <div class="formula_main">
+                                                                            <div class="formula_box">
+                                                                                <div class="formula_heading">
+                                                                                    <h5>Calculation Formular</h5>
+                                                                                </div>
+                                                                                <div class="formula_content">
+                                                                                    <div class="formula_listing">
+                                                                                        <ul>
+                                                                                            <li>
+                                                                                                <div class="formula_detail">
+                                                                                                    <label>$Form.Quality
+                                                                                                        Rating</label>
+                                                                                                </div>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <div class="formula_detail">
+                                                                                                    <strong>+</strong>
+                                                                                                </div>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <div class="formula_detail">
+                                                                                                    <label>$Form.Quality
+                                                                                                        Rating</label>
+                                                                                                </div>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <div class="formula_detail">
+                                                                                                    <span>x5</span>
+                                                                                                </div>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="formula_footer">
+                                                                                    <ul>
+                                                                                        <li><a class="formula_icon1"
+                                                                                               href="javascript:void(0);"></a>
+                                                                                        </li>
+                                                                                        <li><a class="formula_icon2"
+                                                                                               href="javascript:void(0);"></a>
+                                                                                        </li>
+                                                                                        <li><a class="formula_icon3"
+                                                                                               href="javascript:void(0);"></a>
+                                                                                        </li>
+                                                                                        <li><a class="formula_icon4"
+                                                                                               href="javascript:void(0);"></a>
+                                                                                        </li>
+                                                                                        <li><a class="formula_icon5"
+                                                                                               href="javascript:void(0);"></a>
+                                                                                        </li>
+                                                                                        <li><a class="formula_icon6"
+                                                                                               href="javascript:void(0);"></a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                            <a class="formula_delete"
+                                                                               href="javascript:void(0);"><img
+                                                                                    src="images/dottedpopup_icon4.png"
+                                                                                    alt="#"></a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                &lt;!&ndash;15._Form_Field_Value_Setting2&ndash;&gt;
+
+                                                &lt;!&ndash;16.Form_Field_Value_Setting3&ndash;&gt;
+                                                <div class="value_setting_three">
+                                                    <div class="formParent">
+                                                        <div class="formRow clearfix">
+                                                            <div class="formCell col3 allField_titleCol">
+                                                                <div class="form_heading"><strong>Value Setting
+                                                                    Options </strong></div>
+                                                            </div>
+                                                            <div class="formCell col6 popupRow_hasTipIcon">
+                                                                <div class="form_field feild_id">
+                                                                    <div class="selectbox"><span
+                                                                            class="selectbox_span"></span>
+                                                                        <ul class="selectbox_dropdown dropdown_scroll"
+                                                                            style="display: none;">
+                                                                            <li class="">This Field Value Pre-populated
+                                                                                Using Current User or Entity Data
+                                                                            </li>
+                                                                            <li class="">N/A</li>
+                                                                        </ul>
+                                                                    </div>
+                                                                    <em class="popupTooltip_icon">
+                                                                        <em class="popupTooltip">Lorem Ipsum dummy site
+                                                                            amet tooltip Lorem Ipsum dummy site amet
+                                                                            tooltip</em>
+                                                                    </em>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="formRow clearfix">
+                                                            <div class="formCell col3 allField_titleCol">
+                                                                <div class="form_heading"><strong>Select User or
+                                                                    Entity</strong></div>
+                                                            </div>
+                                                            <div class="formCell col6">
+                                                                <div class="form_field">
+                                                                    <div class="selectbox"><span
+                                                                            class="selectbox_span"></span>
+                                                                        <ul class="selectbox_dropdown dropdown_scroll"
+                                                                            style="display: none;">
+                                                                            <li class="">Entity</li>
+                                                                            <li class="">N/A</li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="formRow clearfix">
+                                                            <div class="formCell col9 pull_right">
+                                                                <div class="formRow clearfix">
+                                                                    <div class="formCell col5">
+                                                                        <div class="value_search_main">
+                                                                            <div class="value_search">
+                                                                                <input class="searchtags" type="text"
+                                                                                       placeholder="Search Variables for Calcuation.">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="formCell col7">
+                                                                        <div class="entity_data_main">
+                                                                            <div class="entity_data_heading">
+                                                                                <h5>Selected Entity Data Feild</h5>
+                                                                            </div>
+                                                                            <div class="formula_main">
+                                                                                <div class="form_field">
+                                                                                    <textarea></textarea>
+                                                                                </div>
+                                                                                <a class="formula_delete"
+                                                                                   href="javascript:void(0);"><img
+                                                                                        src="images/dottedpopup_icon4.png"
+                                                                                        alt="#"></a>
+                                                                            </div>
+                                                                            <div class="entity_data_heading">
+                                                                                <h5>$Entity.NAME</h5>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                &lt;!&ndash;16.Form_Field_Value_Setting3&ndash;&gt;
+
+                                                <div class="formRow clearfix">
+                                                    <div class="formCell col12">
+                                                        <div class="form_saveBtn">
+                                                            <input class="all_buttons" type="submit" value="Save">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="popupTabs_show" id="popupTab_5">
+                                            <div class="report_main">
+                                                <div class="formParent">
+                                                    <div class="formRow clearfix">
+                                                        <div class="formCell col12">
+                                                            <div class="form_checkbox">
+                                                                <label>
+                                                                    Is This Field Process Gategory Level Reporting
+                                                                    <input type="checkbox">
+                                                                    <span class="checkbox_checked"></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="formRow clearfix">
+                                                        <div class="formCell col12 allField_titleCol">
+                                                            <div class="form_heading"><span>This  Field Use  the following Process Gategory Variable</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="formRow clearfix">
+                                                        <div class="formCell col3 allField_titleCol">
+                                                            <div class="form_heading"><strong>Select Process Gategory
+                                                                Variable </strong></div>
+                                                        </div>
+                                                        <div class="formCell col6 ">
+                                                            <div class="form_field">
+                                                                <div class="selectbox"><span
+                                                                        class="selectbox_span"></span>
+                                                                    <ul class="selectbox_dropdown dropdown_scroll"
+                                                                        style="display: none;">
+                                                                        <li class=""> This Variable Option Were Set When
+                                                                            Gategory Created
+                                                                        </li>
+                                                                        <li class="">Start Date Plus</li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="formRow clearfix">
+                                                        <div class="formCell col12">
+                                                            <div class="form_saveBtn">
+                                                                <input class="all_buttons" type="submit" value="Save">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="popupTabs_show" id="popupTab_6">
+                                            <div class="help_message_main">
+                                                <div class="formParent">
+                                                    <div class="formRow clearfix">
+                                                        <div class="formCell col3 allField_titleCol">
+                                                            <div class="form_heading"><strong>Help Message</strong>
+                                                            </div>
+                                                        </div>
+                                                        <div class="formCell col9">
+                                                            <div class="form_field">
+                                                                <textarea placeholder=""></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="formRow clearfix">
+                                                        <div class="formCell col12">
+                                                            <div class="form_saveBtn">
+                                                                <input class="all_buttons" type="submit" value="Save">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="popupTabs_show padding_0" id="popupTab_7">
+                                            <div class="checkbox_popup_main">
+                                                <div class="checkbox_popup_top">
+                                                    <div class="checkbox_listing">
+                                                        <ul>
+                                                            <li>
+                                                                <div class="formParent">
+                                                                    <div class="formRow clearfix">
+                                                                        <div class="formCell col3 allField_titleCol">
+                                                                            <div class="form_heading"><strong>Select
+                                                                                Existing Check Boxes</strong></div>
+                                                                        </div>
+                                                                        <div class="formCell col4">
+                                                                            <div class="form_field">
+                                                                                <div class="selectbox"><span
+                                                                                        class="selectbox_span"></span>
+                                                                                    <ul class="selectbox_dropdown dropdown_scroll"
+                                                                                        style="display: none;">
+                                                                                        <li class="">None</li>
+                                                                                        <li class="">N/A</li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="formCell col3 allField_titleCol">
+                                                                            <div class="form_heading"><strong>OR Create
+                                                                                A New Check Box</strong></div>
+                                                                        </div>
+                                                                        <div class="formCell col2 clearfix">
+                                                                            <div class="checkbox_addList">
+                                                                                <a href="javascript:void(0);"><img
+                                                                                        src="images/tableName_addbtn.png"
+                                                                                        alt="#"></a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="formParent">
+                                                                    <div class="formRow clearfix">
+                                                                        <div class="formCell col3 allField_titleCol">
+                                                                            <div class="form_heading"><strong>Checkbox
+                                                                                Name</strong></div>
+                                                                        </div>
+                                                                        <div class="formCell col4">
+                                                                            <div class="form_field">
+                                                                                <input type="text" placeholder="">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="formCell col3 allField_titleCol">
+                                                                            <div class="form_heading"><strong>Allow
+                                                                                Multiple Selections</strong></div>
+                                                                        </div>
+                                                                        <div class="formCell col2">
+                                                                            <div class="form_field">
+                                                                                <div class="selectbox"><span
+                                                                                        class="selectbox_span"></span>
+                                                                                    <ul class="selectbox_dropdown dropdown_scroll"
+                                                                                        style="display: none;">
+                                                                                        <li class="">Yes</li>
+                                                                                        <li class="">No</li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="checkbox_table">
+                                                    <div class="checkbox_tableTile">
+                                                        <div class="formParent">
+                                                            <div class="formRow clearfix">
+                                                                <div class="formCell col3">
+                                                                    <div class="form_heading"><strong>Label
+                                                                        Name</strong></div>
+                                                                </div>
+                                                                <div class="formCell col3">
+                                                                    <div class="form_heading"><strong>Value</strong>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="formCell col3">
+                                                                    <div class="form_heading"><strong>Score</strong>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="formCell col1">
+                                                                    <div class="form_heading"><strong>Default</strong>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="formCell col1">
+                                                                    <div class="form_heading"><strong>Action</strong>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="formCell col1 clearfix">
+                                                                    <div class="checkbox_addList">
+                                                                        <a href="javascript:void(0);"><img
+                                                                                src="images/tableName_addbtn.png"
+                                                                                alt="#"></a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="checkbox_listing">
+                                                        <ul>
+                                                            <li>
+                                                                <div class="formParent">
+                                                                    <div class="formRow clearfix">
+                                                                        <div class="formCell col3">
+                                                                            <div class="form_field">
+                                                                                <input type="text" placeholder="">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="formCell col3">
+                                                                            <div class="form_field">
+                                                                                <input type="text" placeholder="">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="formCell col3">
+                                                                            <div class="form_field">
+                                                                                <input type="text" placeholder="">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="formCell col1">
+                                                                            <div class="form_checkbox">
+                                                                                <label>
+                                                                                    <input type="checkbox">
+                                                                                    <span class="checkbox_checked"></span>
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="formCell col1">
+                                                                            <div class="checkbox_action">
+                                                                                <ul>
+                                                                                    <li>
+                                                                                        <a href="javascript:void(0);"><img
+                                                                                                src="images/checkbox_action1.png"
+                                                                                                alt="#"></a></li>
+                                                                                    <li>
+                                                                                        <a href="javascript:void(0);"><img
+                                                                                                src="images/checkbox_action2.png"
+                                                                                                alt="#"></a></li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="formCell col1">
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="formParent">
+                                                                    <div class="formRow clearfix">
+                                                                        <div class="formCell col3">
+                                                                            <div class="form_field">
+                                                                                <input type="text" placeholder="">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="formCell col3">
+                                                                            <div class="form_field">
+                                                                                <input type="text" placeholder="">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="formCell col3">
+                                                                            <div class="form_field">
+                                                                                <input type="text" placeholder="">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="formCell col1">
+                                                                            <div class="form_checkbox">
+                                                                                <label>
+                                                                                    <input type="checkbox">
+                                                                                    <span class="checkbox_checked"></span>
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="formCell col1">
+                                                                            <div class="checkbox_action">
+                                                                                <ul>
+                                                                                    <li>
+                                                                                        <a href="javascript:void(0);"><img
+                                                                                                src="images/checkbox_action1.png"
+                                                                                                alt="#"></a></li>
+                                                                                    <li>
+                                                                                        <a href="javascript:void(0);"><img
+                                                                                                src="images/checkbox_action2.png"
+                                                                                                alt="#"></a></li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="formCell col1">
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="formParent">
+                                                <div class="formRow clearfix">
+                                                    <div class="formCell col12">
+                                                        <div class="form_saveBtn">
+                                                            <input class="all_buttons" type="submit" value="Save">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>-->
+    <div class="field-popup"></div>
+</div>
+</body>
+
+
+<script>
+    $(document).ready(function () {
+        $(function () {
+            var availableTags = [
+                "$Form.Quality Rating",
+                "$Form.Communication",
+                "$Form.Rating",
+                "$Form.System Rating",
+                "$Form.Service Rating",
+                "$Form.Quality Rating",
+                "$Form.Communication",
+                "$Form.Rating",
+            ];
+            $(".searchtags").autocomplete({
+                source: availableTags
+            });
+
+
+
+        });
+        $('#formBuilder').formBuilder();
+    });
+</script>
+</html>
