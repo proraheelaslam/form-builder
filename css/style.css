@@ -1193,6 +1193,37 @@ body{width:100%;  font-size:16px; font-family: 'Lato', sans-serif; color:#4f5764
 .mce-notification.mce-notification-warning{ display:none;}
 
 
+/* *******************************************Developer****************************************************************8 */
+.resizeHandler_cstm {
+    width: 5px !important;
+    height: 40% !important;
+    position: absolute !important;
+    right: -15px !important;
+    bottom: 16% !important;
+    transition: all 0.175s ease-in-out;
+    display: block !important;
+    border-radius: 2px !important;
+    border: 1px solid #e5e5e5 !important;
+    cursor: ew-resize !important;
+    top: inherit !important;
+    z-index: 90;
+}
+.form_heading_dev{ padding-left: 15px }
+
+.left-resizeable{
+    position: relative;
+    width: 10px;
+    padding: 0px;
+}
+
+.element_inline_cell{
+    display: inline-flex;
+    width: 100%;
+}
+.element_main_cell{
+    width: 100%;
+}
+
 
 
 

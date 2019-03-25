@@ -23,6 +23,7 @@
         let field = '',
             lastID = 1,
             boxID = frmbID + '-control-box';
+
         // create array of field objects and create right sidebar menus
         let frmbFields = [
             {
@@ -57,30 +58,62 @@
 
         var setElemenType;
 
+        var section_id = 1000;
+        var fieldID = 1;
+        var sectionID;
+
+
         var ulObj = $('#dropForm').sortable({
             cursor: 'move',
             opacity: 0.9,
+            handle:  ".sort_handle",
             receive: function (event, ui) {
                 console.log('receive element');
             },
             update: function (event, ui) {
 
+                // save default object in localstorage
+
                 var fieldSchema = JSON.parse(localStorage.getItem("schema")) || {};
-                let fieldId = Object.keys(fieldSchema).length+1;
-                //fieldId++;
+                var fieldSchemaLength = Object.keys(fieldSchema).length;
+                fieldSchemaLength++;
+                var field_section_id = section_id + fieldSchemaLength;
+                var field_id =  field_section_id +'_'+fieldSchemaLength;
+               // return false;
+                saveDefaultFieldsObject(ui.item,field_section_id,field_id);
+
                 setElemenType = ui.item;
-                var fieldHtml = setFieldHtml(ui.item,fieldId);
+                // setHTML on basis of type
+                var fieldHtml = setFieldHtml(ui.item,field_section_id,field_id);
                 ui.item.before(fieldHtml);
                 ui.item.remove();
-                // make field object
-                saveDefaultFieldsObject(ui.item,fieldId);
+
 
             },
             stop: function (event, ui) {
-                //lastID++;
-                //var fieldHtml = setFieldHtml(setElemenType,lastID);
+                /*var fieldSchema = JSON.parse(localStorage.getItem("schema")) || {};
+                var fieldSchemaLength = Object.keys(fieldSchema).length;
+                fieldSchemaLength++;
+                var field_section_id = section_id + fieldSchemaLength;
+                var field_id =  field_section_id +'_'+fieldSchemaLength;*/
 
 
+                var fieldHtml = setFieldHtml(setElemenType);
+                let tempLastId = "1001_1";
+                console.log("tempLastId", tempLastId);
+                let elemId = ".formRow-" + (tempLastId) +" "+ ".left-resizeable-" + tempLastId;
+
+                $(elemId).resizable({
+                    alsoResizeReverse: ".right-resizeable-" + tempLastId,
+                    handles:{
+                        e: "#handle",
+                    },
+                    resize : function(event, ui) {
+                        console.log("resizing...");
+                    },
+                    stop : function(event, ui) {
+                    }
+                });
             }
         });
 
@@ -117,72 +150,153 @@
          * save default object of every field in local storage
          * @param obj
          */
-        var saveDefaultFieldsObject = function (obj,fieldId) {
+        var saveDefaultFieldsObject = function (obj,sectionID,fieldID) {
             let type = $(obj).attr("name");
-            let defaultObj = {};
+            let fieldObj = {};
+            //var field_id = sectionID +'_'+fieldID;
+          //  return false;
+
             switch (type) {
                 case 'text-input':
-                    defaultObj = {
-                        "fields": {
-                            "type": type,
-                            "basic_properties": {
-                                "field_name": '',
-                                "field_id": '',
-                                "default_value": '',
-                                "placeholder": '',
-                                "required": false,
-                                "hide_label": false,
-                                "add_picture": false,
-                                "field_under_label": false,
-                                "is_preloaded_paragraph": false,
-                                "view_only": false,
-                                "hide_field_label": false,
-                                "add_notes": false,
-                                "exclude_from_pdf_report": false,
+                    fieldObj = {
+                                "type": type,
+                                "field_id":fieldID,
+                                "basic_properties": {
+                                    "field_name": '',
+                                    "field_id": '',
+                                    "default_value": '',
+                                    "placeholder": '',
+                                    "required": false,
+                                    "hide_label": false,
+                                    "add_picture": false,
+                                    "field_under_label": false,
+                                    "is_preloaded_paragraph": false,
+                                    "view_only": false,
+                                    "hide_field_label": false,
+                                    "add_notes": false,
+                                    "exclude_from_pdf_report": false,
 
-                            },
-                            "validate_properties": {
-                                "select_validate_condition": '',
-                                "regular_expression": '',
-                                "error_message": '',
-                            },
-                            "format_properties": {
-                                "label_name_format": '',
-                                "field_name_format": '',
-                            },
-                            "setting_properties": {
-                                "value_setting_option": '',
-                            },
-                            "report_properties": {
-                                "is_process_field_reporting": false,
-                                "select_process_category_variable":'',
-                            },
-                            "help_properties": {
-                                "help_message": '',
+                                },
+                                "validate_properties": {
+                                    "select_validate_condition": '',
+                                    "regular_expression": '',
+                                    "error_message": '',
+                                },
+                                "format_properties": {
+                                    "label_name_format": '',
+                                    "field_name_format": '',
+                                },
+                                "setting_properties": {
+                                    "value_setting_option": '',
+                                },
+                                "report_properties": {
+                                    "is_process_field_reporting": false,
+                                    "select_process_category_variable": '',
+                                },
+                                "help_properties": {
+                                    "help_message": '',
 
-                            },
-                        }
+                                }
                     };
                     break;
             }
-            var fieldSchema = JSON.parse(localStorage.getItem("schema")) || {};
-            fieldSchema[fieldId] = defaultObj;
+
+            var defaultSectionObj = {
+                  [sectionID]: {
+                      "name": "section_name",
+                      "setting": "ON",
+                      "section_id":sectionID,
+                      "fields": [fieldObj]
+                  }
+            };
+
+           /* var defaultObj = {
+                "section":defaultSectionObj
+            };*/
+
+            var fieldSchema = JSON.parse(localStorage.getItem("schema")) || [];
+            fieldSchema.push(defaultSectionObj);
             window.localStorage.setItem('schema', JSON.stringify(fieldSchema));
+            return false;
         };
 
         // Display the right sidebar control menus
-        var setFieldHtml = function (obj,lastID) {
+        var setFieldHtml = function (obj,sectionID,fieldID) {
             let type = $(obj).attr("name");
             let fieldHtml = '';
-            var fieldsData = getFieldSchema(lastID);
+
             switch (type) {
                 case 'text-input':
-                    fieldHtml += `<div class="form_rowHover parentSection " id="form-row-hover-${lastID}">
-                                   <div class="formRow clearfix innerBox" id="group_${lastID}">
-                                      <div class="formCell col12 " id="innerElement_${lastID}">
-                                         <div class="form_editRow field-${lastID}">
+                    fieldHtml += `<div class="form_rowHover group_container" id="form-row-hover-${fieldID}">
+                                  <div class="formRow clearfix element_main_row_container formRow-${fieldID}">
+                                      <div class="element_main_cell">
+                                          <div class="element_inline_cell">
+                                              <div class="formCell left-resizeable left-resizeable-${fieldID}">
+                                                  <div class="form_heading"><span><br></span></div>
+                                                  <a id="handle" class="ui-resizable-handle ui-resizable-e resizeHandler_cstm"></a>
+                                              </div>
+                                              <div class="formCell col12 right-resizeable right-resizeable-${fieldID}" style="padding: 0px">
+                                                  <div class="form_editRow">
+                                                      <div class="form_heading form_heading_dev"><span>Text Field</span></div>
+                                                      <div class="form_editRow_inner">
+                                                          <div class="controle_row_main"></div>
+                                                          <div class="form_field">
+                                                              <input type="text" placeholder=""> </div>
+                                                          <div class="dotted_icon">
+                                                              <a class="dotted_btn" href="javascript:void(0);"><img src="images/dotted_img.png" alt="#"></a>
+                                                              <ul>
+                                                                  <li>
+                                                                      <a href="javascript:void(0);" id="left-cell-insertion" type="${type}"><img src="images/dottedpopup_icon1.png" alt="#"></a>
+                                                                  </li>
+                                                                  <li>
+                                                                      <a href="javascript:void(0);" id="right-cell-insertion" type="${type}"><img src="images/dottedpopup_icon2.png" alt="#"></a>
+                                                                  </li>
+                                                                  <li>
+                                                                      <a href="javascript:void(0);" type="${type}"><img src="images/dottedpopup_icon3.png" alt="#"></a>
+                                                                  </li>
+                                                                  <li>
+                                                                      <a href="javascript:void(0);" type="${type}"><img src="images/dottedpopup_icon4.png" alt="#"></a>
+                                                                  </li>
+                                                                  <li>
+                                                                      <a id="editPopup_${fieldID}" class="formSmallBox_edit " type="${type}" href="javascript:void(0);"><img src="images/dottedpopup_icon5.png" alt="#"></a>
+                                                                  </li>
+                                                                  <li>
+                                                                      <a href="javascript:void(0);" class="sort_handle"><img src="images/dottedpopup_icon6.png" alt="#"></a>
+                                                                  </li>
+                                                              </ul>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div id="formBuilder"></div>
+                                  <div class="form_rowHover_popup">
+                                      <ul>
+                                          <li>
+                                              <a href="javascript:void(0);"><img src="images/blue4_dottes.png" alt="#"></a>
+                                          </li>
+                                          <li>
+                                              <a href="javascript:void(0);"><img src="images/dottedpopup_icon3.png" alt="#"></a>
+                                          </li>
+                                          <li>
+                                              <a href="javascript:void(0);"><img src="images/dottedpopup_icon4.png" alt="#"></a>
+                                          </li>
+                                          <li>
+                                              <a class="formSmallBox_edit " href="javascript:void(0);"><img src="images/dottedpopup_icon5.png" alt="#"></a>
+                                          </li>
+                                      </ul>
+                                  </div>
+                              </div>`;
+                    break;
+              /*  case 'text-input':
+                    fieldHtml += `<div class="form_rowHover parentSection " id="form-row-hover-${sectionID}">
+                                   <div class="formRow clearfix innerBox" id="group_${sectionID}">
+                                      <div class="formCell col12 " id="innerElement_${fieldID}">
+                                         <div class="form_editRow field-${fieldID}">
                                             <div class="form_heading ">
-                                            <span class="field_label" id="fieldLabel_${lastID}">${defaults.messages.text}</span>
+                                            <span class="field_label" id="fieldLabel_${fieldID}">${defaults.messages.text}</span>
 
                                             <div class="form_editRow_inner">
                                                <div class="controle_row_main">
@@ -190,7 +304,7 @@
                                                   <div class="controle_row_popup"><span>X pos: <b>550</b></span> </div>
                                                </div>
                                                <div class="form_field">
-                                                <input type="text" placeholder="" class="textField_${lastID} filed_name" id="fieldName_${lastID}"> 
+                                                <input type="text" placeholder="" class="textField_${fieldID} filed_name" id="fieldName_${fieldID}"> 
                                                 
                                                 </div>
                                                <div class="dotted_icon">
@@ -198,9 +312,9 @@
                                                   <ul>
                                                      <li><a href="javascript:void(0);"><img src="images/dottedpopup_icon1.png" alt="#"></a></li>
                                                      <li><a href="javascript:void(0);"><img src="images/dottedpopup_icon2.png" alt="#"></a></li>
-                                                     <li><a id="copyField_${lastID}" class="copyFieldBox " href="javascript:void(0);"><img src="images/dottedpopup_icon3.png" alt="#"></a></li>
-                                                     <li><a id="deleteField_${lastID}" class="deleteFieldBox" href="javascript:void(0);"><img src="images/dottedpopup_icon4.png" alt="#"></a></li>
-                                                     <li><a id="editPopup_${lastID}" class="formSmallBox_edit " type="${type}" href="javascript:void(0);"><img src="images/dottedpopup_icon5.png" alt="#"></a></li>
+                                                     <li><a id="copyField_${fieldID}" class="copyFieldBox " href="javascript:void(0);"><img src="images/dottedpopup_icon3.png" alt="#"></a></li>
+                                                     <li><a id="deleteField_${fieldID}" class="deleteFieldBox" href="javascript:void(0);"><img src="images/dottedpopup_icon4.png" alt="#"></a></li>
+                                                     <li><a id="editPopup_${fieldID}" class="formSmallBox_edit " type="${type}" href="javascript:void(0);"><img src="images/dottedpopup_icon5.png" alt="#"></a></li>
                                                      <li><a href="javascript:void(0);" class="sort_handle"><img src="images/dottedpopup_icon6.png" alt="#"></a></li>
                                                   </ul>
                                                </div>
@@ -225,7 +339,7 @@
                     fieldHtml += `<div class="form_rowHover">
                                    <div class="formRow clearfix">
                                       <div class="formCell col12">
-                                         <div class="form_editRow field-${lastID}">
+                                         <div class="form_editRow field-${fieldID}">
                                             <div class="form_heading"><span>Number Field</span></div>
                                             <div class="form_editRow_inner">
                                                <div class="controle_row_main">
@@ -240,7 +354,7 @@
                                                      <li><a href="javascript:void(0);"><img src="images/dottedpopup_icon2.png" alt="#"></a></li>
                                                      <li><a href="javascript:void(0);"><img src="images/dottedpopup_icon3.png" alt="#"></a></li>
                                                      <li><a href="javascript:void(0);"><img src="images/dottedpopup_icon4.png" alt="#"></a></li>
-                                                     <li><a id="editPopup_${lastID}" class="formSmallBox_edit " type="${type}" href="javascript:void(0);"><img src="images/dottedpopup_icon5.png" alt="#"></a></li>
+                                                     <li><a id="editPopup_${fieldID}" class="formSmallBox_edit " type="${type}" href="javascript:void(0);"><img src="images/dottedpopup_icon5.png" alt="#"></a></li>
                                                      <li><a href="javascript:void(0);" class="sort_handle"><img src="images/dottedpopup_icon6.png" alt="#"></a></li>
                                                   </ul>
                                                </div>
@@ -258,12 +372,12 @@
                                       </ul>
                                    </div>
                                 </div>`;
-                    break;
+                    break;*/
                 default:
                     fieldHtml += `<div class="form_rowHover">
                                    <div class="formRow clearfix">
                                       <div class="formCell col12">
-                                         <div class="form_editRow field-${lastID}">
+                                         <div class="form_editRow field-${fieldID}">
                                             <div class="form_heading"><span>Number Field</span></div>
                                             <div class="form_editRow_inner">
                                                <div class="controle_row_main">
@@ -278,7 +392,7 @@
                                                      <li><a href="javascript:void(0);"><img src="images/dottedpopup_icon2.png" alt="#"></a></li>
                                                      <li><a href="javascript:void(0);"><img src="images/dottedpopup_icon3.png" alt="#"></a></li>
                                                      <li><a href="javascript:void(0);"><img src="images/dottedpopup_icon4.png" alt="#"></a></li>
-                                                     <li><a id=" editPopup_${lastID}" class="formSmallBox_edit" type="${type}" href="javascript:void(0);"><img src="images/dottedpopup_icon5.png" alt="#"></a></li>
+                                                     <li><a id=" editPopup_${fieldID}" class="formSmallBox_edit" type="${type}" href="javascript:void(0);"><img src="images/dottedpopup_icon5.png" alt="#"></a></li>
                                                      <li><a href="javascript:void(0);" class="sort_handle"><img src="images/dottedpopup_icon6.png" alt="#"></a></li>
                                                   </ul>
                                                </div>
@@ -298,6 +412,7 @@
                                 </div>`;
                     break;
             }
+
             return fieldHtml;
 
 
@@ -310,21 +425,28 @@
         function renderSavedFields() {
 
             let savedFieldData = JSON.parse(localStorage.getItem("schema")) || {};
+
+
             var fieldHtml;
             for (var key in savedFieldData) {
-                if (savedFieldData.hasOwnProperty(key)) {
+                if (savedFieldData.hasOwnProperty(key)) { console.log(savedFieldData[key]);
+                     var sectionData  = savedFieldData[key];
+                    for (var sectionKey in sectionData)  {
+                        var fieldsData  = sectionData[sectionKey].fields;
+                        var section_id = sectionData[sectionKey].section_id;
+                        for (var fieldKey in fieldsData)  {
 
-                    let fieldType = savedFieldData[key].fields.type;
-                    let fieldObj  = savedFieldData[key].fields;
+                            let fieldType = fieldsData[fieldKey].type;
+                            let fieldObj = fieldsData[fieldKey];
+                            let field_id = fieldsData[fieldKey].field_id
+                            if (fieldType == 'text-input') {
 
-                    if (fieldType == 'text-input') {
-
-                        fieldHtml = `<div class="form_rowHover " id="form-row-hover-${key}">
-                                   <div class="formRow clearfix innerBox" id="innerSection_${key}">
-                                      <div class="formCell col12"  id="innerElement_${key}">
-                                         <div class="form_editRow field-${key}">
+                                fieldHtml = `<div class="form_rowHover " id="form-row-hover-${section_id}">
+                                   <div class="formRow clearfix innerBox" id="innerSection_${section_id}">
+                                      <div class="formCell col12"  id="innerElement_${field_id}">
+                                         <div class="form_editRow field-${field_id}">
                                             <div class="form_heading ">
-                                            <span class="textLabel_${key}" >${fieldObj.basic_properties.field_name || defaults.messages.text}</span>
+                                            <span class="textLabel_${field_id}" >${fieldObj.basic_properties.field_name || defaults.messages.text}</span>
 
                                             <div class="form_editRow_inner">
                                                <div class="controle_row_main">
@@ -340,9 +462,9 @@
                                                   <ul>
                                                      <li><a href="javascript:void(0);"><img src="images/dottedpopup_icon1.png" alt="#"></a></li>
                                                      <li><a href="javascript:void(0);"><img src="images/dottedpopup_icon2.png" alt="#"></a></li>
-                                                     <li><a id="copyField_${key}" class="copyFieldBox" href="javascript:void(0);"><img src="images/dottedpopup_icon3.png" alt="#"></a></li>
-                                                     <li><a id="deleteField_${key}" class="deleteFieldBox" href="javascript:void(0);"><img src="images/dottedpopup_icon4.png" alt="#"></a></li>
-                                                     <li><a id="editPopup_${key}" class="formSmallBox_edit " type="${fieldType}" href="javascript:void(0);"><img src="images/dottedpopup_icon5.png" alt="#"></a></li>
+                                                     <li><a id="copyField_${field_id}" data-section-id ="${sectionKey}"  data-field-id="${field_id}" class="copyFieldBox" href="javascript:void(0);"><img src="images/dottedpopup_icon3.png" alt="#"></a></li>
+                                                     <li><a id="deleteField_${field_id}" data-section-id="${sectionKey}"  data-field-id="${field_id}" class="deleteFieldBox" href="javascript:void(0);"><img src="images/dottedpopup_icon4.png" alt="#"></a></li>
+                                                     <li><a id="editPopup_${field_id}" data-section-id ="${sectionKey}"  data-field-id="${field_id}" class="formSmallBox_edit " type="${fieldType}" href="javascript:void(0);"><img src="images/dottedpopup_icon5.png" alt="#"></a></li>
                                                      <li><a href="javascript:void(0);" class="sort_handle"><img src="images/dottedpopup_icon6.png" alt="#"></a></li>
                                                   </ul>
                                                </div>
@@ -361,9 +483,13 @@
                                    </div>
                                 </div>`;
 
-                        $("#dropForm").append(fieldHtml);
+                                $("#dropForm").append(fieldHtml);
+
+                            }
+                        }
 
                     }
+
 
                 }
 
@@ -465,11 +591,12 @@
 
         var showPopup = function (obj) {
 
-            let popupId = (extractId(obj.attr('id')));
+            let fieldId =  (obj.attr('data-field-id'));
+            let sectionId = obj.attr('data-section-id');
 
             let type = obj.attr('type');
 
-            var fieldsData = getFieldSchema(popupId);
+            var fieldsData = getFieldSchema(fieldId);
 
             let fieldHeadingHtml = fieldHeading(type);
             let basicFieldHtml = basicTab(type, fieldsData);
@@ -479,8 +606,9 @@
             var reportSettingFieldHtml = reportSettingTab(type, fieldsData);
             var helpMessageFieldHtml = helpMessageTab(type, fieldsData);
 
-            let popupHtml = `<div class="all_popup formEdit_main_popup fieldPopup_${popupId}" >
-                                    <input type="hidden" value="${popupId}" class="popup_id" name="popup_id">
+            let popupHtml = `<div class="all_popup formEdit_main_popup fieldPopup_${fieldId}" >
+                                    <input type="hidden" value="${fieldId}" class="field_id" name="popup_id">
+                                    <input type="hidden" value="${sectionId}" class="section_id" name="popup_id">
                                     <div class="all_popup_inner">
                                         <div class="popup_table">
                                             <div class="popup_tableCell">
@@ -550,13 +678,38 @@
             showTinymceEditor();
         };
 
-        var getFieldSchema = function (popupId) {
+       /* var getFieldSchema = function (popupId) {
             var data = JSON.parse(localStorage.getItem("schema")) || {};
             if (typeof data[popupId] === 'undefined') {
                 return data = {};
             }
             return  data[popupId].fields;
+        };*/
+
+        var getFieldSchema = function (popupId) {
+            var data = JSON.parse(localStorage.getItem("schema")) || {};
+
+            for (var sectionkey in data) {
+                var sectionData  = data[sectionkey];
+                for (var fieldKey in sectionData) {
+                    var fieldData  = sectionData[fieldKey];
+                    for (var key in fieldData) {
+                        var fields = fieldData[key];
+                        for (var k in fields) {
+                            let field_key  = fields[k].field_id;
+                            if (field_key === popupId) {
+                                return fields[k];
+                            }
+                        }
+                    }
+                }
+            }
+            if (typeof data[popupId] === 'undefined') {
+                return data = {};
+            }
+            return  data[popupId].fields;
         };
+
 
         var fieldHeading = function (type) {
             let fieldHeadingHtml = '';
@@ -1029,139 +1182,158 @@
         $(document).on('click', '.all_buttons', function (e) {
 
             let fieldType = $(this).attr('field-type');
-            let popupId = parseInt($(".popup_id").val());
+            let fieldId = $(".field_id").val();
+            let sectionId = $(".section_id").val();
+
             let tabName = $(this).attr('tab-name');
-            let fieldsObject = JSON.parse(localStorage.getItem("schema")) || {};
-            /*console.log(popupId);
-            console.log(lastID);
-            console.log(fieldsObject[popupId]);*/
-            if (fieldType == 'text-input') {
+            let fieldsArr = JSON.parse(localStorage.getItem("schema")) || {};
+            console.log(fieldsArr);
 
-                if (tabName == 'basic_tab') {
-                    let fieldName = $("input[name='field_name']").val();
-                    let fieldId = $("input[name='field_id']").val();
-                    let defaultValue = $("input[name='default_value']").val();
-                    let placeHolder = $("input[name='placeholder']").val();
-                    // checkboxes
+            for (var sectionkey in fieldsArr) {
 
-                    let required = $("input[name='required']").is(":checked");
-                    let add_picture = $("input[name='add_picture']").is(":checked");
-                    let field_under_label = $("input[name='field_under_label']").is(":checked");
-                    let is_preloaded_paragraph = $("input[name='is_preloaded_paragraph']").is(":checked");
-                    let view_only = $("input[name='view_only']").is(":checked");
-                    let hide_field_label = $("input[name='hide_field_label']").is(":checked");
-                    let hide_label = $("input[name='hide_label']").is(":checked");
-                    let add_notes = $("input[name='add_notes']").is(":checked");
-                    let exclude_from_pdf_report = $("input[name='exclude_from_pdf_report']").is(":checked");
+                var sectionData = fieldsArr[sectionkey];
+                if (sectionData[sectionId].section_id == sectionId) {
 
 
-                    let basicObj = {};
+                    var sectionFields = sectionData[sectionId].fields;
+                    var field_key = 0;
+                    for (var singleField in sectionFields) {
 
-                    basicObj.field_name = fieldName;
-                    basicObj.field_id = fieldId;
-                    basicObj.default_value = defaultValue;
-                    basicObj.placeholder = placeHolder;
-                    basicObj.required = required;
-                    basicObj.add_picture = add_picture;
-                    basicObj.field_under_label = field_under_label;
-                    basicObj.is_preloaded_paragraph = is_preloaded_paragraph;
-                    basicObj.view_only = view_only;
-                    basicObj.hide_field_label = hide_field_label;
-                    basicObj.hide_label = hide_label;
-                    basicObj.add_notes = add_notes;
-                    basicObj.exclude_from_pdf_report = exclude_from_pdf_report;
+                        var single_field  = sectionFields[singleField];
+
+                        if (sectionFields[singleField].field_id == fieldId) {   console.log("match****************");
+
+                            let fieldType = sectionFields[singleField].type;
+                            if (fieldType == 'text-input') {
+
+                                if (tabName == 'basic_tab') {
+
+                                    var fieldName = $("input[name='field_name']").val();
+                                    let fieldId = $("input[name='field_id']").val();
+                                    let defaultValue = $("input[name='default_value']").val();
+                                    let placeHolder = $("input[name='placeholder']").val();
+                                    // checkboxes
+
+                                    let required = $("input[name='required']").is(":checked");
+                                    let add_picture = $("input[name='add_picture']").is(":checked");
+                                    let field_under_label = $("input[name='field_under_label']").is(":checked");
+                                    let is_preloaded_paragraph = $("input[name='is_preloaded_paragraph']").is(":checked");
+                                    let view_only = $("input[name='view_only']").is(":checked");
+                                    let hide_field_label = $("input[name='hide_field_label']").is(":checked");
+                                    let hide_label = $("input[name='hide_label']").is(":checked");
+                                    let add_notes = $("input[name='add_notes']").is(":checked");
+                                    let exclude_from_pdf_report = $("input[name='exclude_from_pdf_report']").is(":checked");
 
 
-                    fieldsObject[popupId].fields.basic_properties = basicObj;
+                                    let basicObj = {};
+
+                                    basicObj.field_name = fieldName;
+                                    basicObj.field_id = fieldId;
+                                    basicObj.default_value = defaultValue;
+                                    basicObj.placeholder = placeHolder;
+                                    basicObj.required = required;
+                                    basicObj.add_picture = add_picture;
+                                    basicObj.field_under_label = field_under_label;
+                                    basicObj.is_preloaded_paragraph = is_preloaded_paragraph;
+                                    basicObj.view_only = view_only;
+                                    basicObj.hide_field_label = hide_field_label;
+                                    basicObj.hide_label = hide_label;
+                                    basicObj.add_notes = add_notes;
+                                    basicObj.exclude_from_pdf_report = exclude_from_pdf_report;
+
+                                    console.log('***********Baisc Tab***********');
+                                    console.log(basicObj);
+                                    console.log(fieldName);
+                                    single_field.basic_properties = basicObj;
+
+                                    console.log('**********8sibgle');
+                                    console.log(singleField);
+                                    console.log(("#fieldLabel_"+fieldId));
+                                    $("#fieldLabel_"+fieldId).html(fieldName);
+                                    $("#fieldName_"+fieldId).attr('placeholder',placeHolder);
+                                    $(".textField_"+fieldId).val(defaultValue);
 
 
-                } else if (tabName == 'validate_tab') {
+                                } else if (tabName == 'validate_tab') {
 
-                    let errorMessage = $.trim($("#error_message").val());
-                    let regExpression = $("input[name='reg_expression']").val();
-                    let defualtRegex = $("input[name='default_regex']").val();
-                    let validateObj = {};
+                                    let errorMessage = $.trim($("#error_message").val());
+                                    let regExpression = $("input[name='reg_expression']").val();
+                                    let defualtRegex = $("input[name='default_regex']").val();
+                                    let validateObj = {};
 
-                    let selectRegexCondition = 'N/A';
-                    $(".select_regex_condition li").each(function (index, item) {
-                        if ($(this).hasClass('active')) {
-                            selectRegexCondition = $(this).attr('regex-data');
+                                    let selectRegexCondition = 'N/A';
+                                    $(".select_regex_condition li").each(function (index, item) {
+                                        if ($(this).hasClass('active')) {
+                                            selectRegexCondition = $(this).attr('regex-data');
+                                        }
+                                    });
+                                    validateObj.select_validate_condition = selectRegexCondition;
+                                    validateObj.regular_expression = regExpression;
+                                    validateObj.error_message = errorMessage;
+
+                                    single_field.validate_properties = validateObj;
+
+
+                                } else if (tabName == 'format_tab') {
+
+
+                                    let labelNameFormat = $("input[name='label_name_format']").val();
+                                    let fieldNameFormat = $("input[name='field_name_format']").val();
+
+                                    let formatObj = {};
+                                    formatObj.label_name_format = labelNameFormat;
+                                    formatObj.field_name_format = fieldNameFormat;
+                                    single_field.fields.format_properties = formatObj;
+
+                                } else if (tabName == 'setting_tab') {
+
+                                } else if (tabName == 'report_tab') {
+
+                                    let is_process_field_reporting = $("input[name='is_process_field_reporting']").is(":checked");
+                                    //Start Date Plus
+                                    let select_process_category_variable = 'N/A';
+                                    $(".report_category_dropdown li").each(function (index, item) {
+                                        if ($(this).hasClass('active')) {
+                                            select_process_category_variable = $(this).attr('report-data');
+                                        }
+                                    });
+
+                                    let reportObj = {};
+                                    reportObj.is_process_field_reporting = is_process_field_reporting;
+                                    reportObj.select_process_category_variable = select_process_category_variable;
+                                    single_field.report_properties = reportObj;
+
+
+                                } else if (tabName == 'help_tab') {
+
+                                    let helpMessage = $(".help_message").val();
+                                    let helpObj = {};
+                                    helpObj.help_message = helpMessage;
+                                    single_field.help_properties = helpObj;
+
+                                }
+
+                                sectionFields[field_key] = single_field;
+                                fieldsArr[sectionkey] = sectionData;
+
+
+                                //
+
+
+                            }
+                            console.log('section keys***********************');
+                            console.log(sectionId);
+                            console.log(fieldId);
+                            // update data in localStorage on id base
+                            window.localStorage.setItem('schema', JSON.stringify(fieldsArr));
+                            break;
                         }
-                    });
-                    validateObj.select_validate_condition = selectRegexCondition;
-                    validateObj.regular_expression = regExpression;
-                    validateObj.error_message = errorMessage;
+                        field_key = field_key + 1;
 
-                    fieldsObject[popupId].fields.validate_properties = validateObj;
-
-
-                } else if (tabName == 'format_tab') {
-
-
-                    let labelNameFormat = $("input[name='label_name_format']").val();
-                    let fieldNameFormat = $("input[name='field_name_format']").val();
-
-                    let formatObj = {};
-                    formatObj.label_name_format = labelNameFormat;
-                    formatObj.field_name_format = fieldNameFormat;
-
-                    fieldsObject[popupId].fields.format_properties = formatObj;
-
-
-                } else if (tabName == 'setting_tab') {
-
-
-                } else if (tabName == 'report_tab') {
-
-                    let is_process_field_reporting = $("input[name='is_process_field_reporting']").is(":checked");
-                    //Start Date Plus
-                    let select_process_category_variable= 'N/A';
-                    $(".report_category_dropdown li").each(function (index, item) {
-                        if ($(this).hasClass('active')) {
-                            select_process_category_variable = $(this).attr('report-data');
-                        }
-                    });
-                    console.log(select_process_category_variable);
-                    let reportObj = {};
-                    reportObj.is_process_field_reporting = is_process_field_reporting;
-                    reportObj.select_process_category_variable = select_process_category_variable;
-
-                    fieldsObject[popupId].fields.report_properties = reportObj;
-
-
-
-                } else if (tabName == 'help_tab') {
-
-                    let helpMessage = $(".help_message").val();
-                    let helpObj = {};
-                    helpObj.help_message = helpMessage;
-                    fieldsObject[popupId].fields.help_properties = helpObj;
-
+                    }
                 }
-
-
-
-
+                break;
             }
-            // update data in localStorage on id base
-            window.localStorage.setItem('schema', JSON.stringify(fieldsObject));
-            var fields =  getFieldSchema(popupId);
-            // set field value
-             console.log('asdadadadadsda');
-
-
-
-             console.log($(".textLabel_"+popupId));
-
-             console.log($(".textLabel_"+popupId).html());
-
-             $("#fieldLabel_"+popupId).html(fields.basic_properties.field_name);
-             $("#fieldName_"+popupId).attr('placeholder',fields.basic_properties.placeholder);
-             $(".textField_"+popupId).val(fields.basic_properties.default_value);
-
-
-
-
 
             $("body").removeClass("hidden");
             $(".all_popup").hide();
@@ -1197,6 +1369,142 @@
             $(".all_popup").html('');
             $(".field-popup").html('');
         });
+
+
+
+        /********************* BY ZESHAN **************************/
+
+        var controlPartialTemplates = function(type,fieldID){
+            let partialHtml = '';
+            switch(type.toLowerCase()){
+                case 'text-input':
+                    partialHtml += `
+                              <div class="element_main_cell">
+                                <div class="element_inline_cell">
+                                    <div class="formCell left-resizeable left-resizeable-${fieldID}">
+                                        <div class="form_heading"><span><br></span></div>
+                                        <a id="handle" class="ui-resizable-handle ui-resizable-e resizeHandler_cstm"></a>
+                                    </div>
+                                    <div class="formCell col12 right-resizeable-${fieldID}" style="padding: 0px">
+                                        <div class="form_editRow">
+                                            <div class="form_heading form_heading_dev"><span>Text Field</span></div>
+                                            <div class="form_editRow_inner">
+                                                <div class="controle_row_main">
+                                                </div>
+                                                <div class="form_field">
+                                                    <input type="text" placeholder=""> </div>
+                                                <div class="dotted_icon">
+                                                    <a class="dotted_btn" href="javascript:void(0);"><img src="images/dotted_img.png" alt="#"></a>
+                                                    <ul>
+                                                        <li>
+                                                            <a href="javascript:void(0);" id="left-cell-insertion" type="${type}"><img src="images/dottedpopup_icon1.png" alt="#"></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:void(0);" id="right-cell-insertion" type="${type}"><img src="images/dottedpopup_icon2.png" alt="#"></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:void(0);"><img src="images/dottedpopup_icon3.png" alt="#"></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:void(0);"><img src="images/dottedpopup_icon4.png" alt="#"></a>
+                                                        </li>
+                                                        <li>
+                                                            <a id="editPopup_${fieldID}" class="formSmallBox_edit" type="${type}" href="javascript:void(0);"><img src="images/dottedpopup_icon5.png" alt="#"></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:void(0);" class="sort_handle"><img src="images/dottedpopup_icon6.png" alt="#"></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            `;
+                    break;
+            }
+
+
+            return partialHtml;
+        };
+
+        // =============================== left cell insertion inside a row ===============================
+        $(document).on("click", "#left-cell-insertion", function(){
+
+            let type = $(this).attr("type");
+            let parentDiv = $(this).closest('.group_container > .element_main_row_container');
+            let partialHtml = controlPartialTemplates(type,fieldID);// + '-inline-cell'
+
+            $(parentDiv).children().each(function(index, value){
+                let uiElements = $(this).find(".element_inline_cell").children(); //will give you all childrens
+
+                // remove resizeable style from elements
+                $(uiElements).each(function(index, value){
+                    $(this).removeAttr("style")
+                });
+
+            });
+
+            parentDiv.prepend(partialHtml);
+            applyResizeable(fieldID);
+            fieldID++;
+
+        });
+
+        // =============================== right cell insertion inside a row ===============================
+        $(document).on("click", "#right-cell-insertion", function(){
+
+            let type = $(this).attr("type");
+            let parentDiv = $(this).closest('.group_container > .element_main_row_container');
+            let partialHtml = controlPartialTemplates(type);// + '-inline-cell'
+
+            /*console.log("partialHtml", type);
+            return false;*/
+
+            $(parentDiv).children().each(function(index, value){
+                // console.log($(this).find(".element_inline_cell").children());
+                let uiElements = $(this).find(".element_inline_cell").children(); //will give you all childrens
+
+                // remove resizeable style from elements
+                $(uiElements).each(function(index, value){
+                    $(this).removeAttr("style")
+                });
+
+            });
+
+            parentDiv.append(partialHtml);
+            applyResizeable(fieldID);
+            fieldID++;
+        });
+
+
+        /**
+         * Apply resize on control
+         * @param lastIdCounter
+         */
+        var applyResizeable = function(lastIdCounter){
+
+            let tempLastId = lastIdCounter || fieldID;
+            let elemId = ".left-resizeable-" + tempLastId;//".formRow-" + (tempLastId) +" "+ ".left-resizeable-" + tempLastId
+
+            // console.log("elemId", elemId);
+
+            $(elemId).resizable({
+                alsoResizeReverse: ".right-resizeable-" + tempLastId,
+                handles:{
+                    e: "#handle",
+                },
+                resize : function(event, ui) {
+                    console.log("resizing...");
+                },
+                stop : function(event, ui) {
+                }
+            });
+        };
+
+
+
     };
 
 
@@ -1214,9 +1522,7 @@
 
     };
 
-
-
-  var showTinymceEditor = function () {
+    var showTinymceEditor = function () {
 
       tinymce.init({
           selector: '.mytextarea',
@@ -1233,9 +1539,3 @@
 })(jQuery);
 
 
-/*
-function set_html(obj){
-   console.log($(obj).attr("name"));
-   var html = '<div class="form_rowHover"> <div class="formRow clearfix"> <div class="formCell col12"> <div class="form_editRow"> <div class="form_heading"><span>Text Field</span></div><div class="form_editRow_inner"> <div class="controle_row_main"><a href="javascript:void(0);"></a> <div class="controle_row_popup"><span>X pos: <b>550</b></span> </div></div><div class="form_field"> <input type="text" placeholder=""> </div><div class="dotted_icon"><a class="dotted_btn" href="javascript:void(0);"><img src="images/dotted_img.png" alt="#"></a> <ul> <li><a href="javascript:void(0);"><img src="images/dottedpopup_icon1.png" alt="#"></a></li><li><a href="javascript:void(0);"><img src="images/dottedpopup_icon2.png" alt="#"></a></li><li><a href="javascript:void(0);"><img src="images/dottedpopup_icon3.png" alt="#"></a></li><li><a href="javascript:void(0);"><img src="images/dottedpopup_icon4.png" alt="#"></a></li><li><a class="formSmallBox_edit" href="javascript:void(0);"><img src="images/dottedpopup_icon5.png" alt="#"></a></li><li><a href="javascript:void(0);" class="sort_handle"><img src="images/dottedpopup_icon6.png" alt="#"></a></li></ul> </div></div></div></div></div><div id="formBuilder"></div><div class="form_rowHover_popup"> <ul> <li><a href="javascript:void(0);"><img src="images/blue4_dottes.png" alt="#"></a></li><li><a href="javascript:void(0);"><img src="images/dottedpopup_icon3.png" alt="#"></a></li><li><a href="javascript:void(0);"><img src="images/dottedpopup_icon4.png" alt="#"></a></li><li><a class="formSmallBox_edit" href="javascript:void(0);"><img src="images/dottedpopup_icon5.png" alt="#"></a></li></ul> </div></div>';
-   return html;
-}*/
