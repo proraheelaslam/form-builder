@@ -91,12 +91,6 @@
 
             },
             stop: function (event, ui) {
-                /*var fieldSchema = JSON.parse(localStorage.getItem("schema")) || {};
-                var fieldSchemaLength = Object.keys(fieldSchema).length;
-                fieldSchemaLength++;
-                var field_section_id = section_id + fieldSchemaLength;
-                var field_id =  field_section_id +'_'+fieldSchemaLength;*/
-
 
                 var fieldHtml = setFieldHtml(setElemenType);
                 let tempLastId = "1001_1";
@@ -217,7 +211,7 @@
             var fieldSchema = JSON.parse(localStorage.getItem("schema")) || [];
             fieldSchema.push(defaultSectionObj);
             window.localStorage.setItem('schema', JSON.stringify(fieldSchema));
-            return false;
+
         };
 
         // Display the right sidebar control menus
@@ -227,21 +221,22 @@
 
             switch (type) {
                 case 'text-input':
-                    fieldHtml += `<div class="form_rowHover group_container" id="form-row-hover-${fieldID}">
-                                  <div class="formRow clearfix element_main_row_container formRow-${fieldID}">
+                    fieldHtml += `<div class="form_rowHover group_container section_${sectionID}" id="form-row-hover-${fieldID}" >
+                                  <div class="formRow clearfix element_main_row_container formRow-${fieldID} innerBox" >
                                       <div class="element_main_cell">
                                           <div class="element_inline_cell">
                                               <div class="formCell left-resizeable left-resizeable-${fieldID}">
                                                   <div class="form_heading"><span><br></span></div>
                                                   <a id="handle" class="ui-resizable-handle ui-resizable-e resizeHandler_cstm"></a>
                                               </div>
-                                              <div class="formCell col12 right-resizeable right-resizeable-${fieldID}" style="padding: 0px">
+                                              <div id="innerElement_${fieldID}" class="formCell  col12 right-resizeable right-resizeable-${fieldID}" style="padding: 0px">
                                                   <div class="form_editRow">
-                                                      <div class="form_heading form_heading_dev"><span>Text Field</span></div>
+                                                      <div class="form_heading form_heading_dev" >
+                                                      <span class="field_label" id="fieldLabel_${fieldID}" >${defaults.messages.text}</span></div>
                                                       <div class="form_editRow_inner">
                                                           <div class="controle_row_main"></div>
                                                           <div class="form_field">
-                                                              <input type="text" placeholder=""> </div>
+                                                              <input type="text" placeholder="" value="" class="filed_name" id="fieldName_${fieldID}"> </div>
                                                           <div class="dotted_icon">
                                                               <a class="dotted_btn" href="javascript:void(0);"><img src="images/dotted_img.png" alt="#"></a>
                                                               <ul>
@@ -252,13 +247,13 @@
                                                                       <a href="javascript:void(0);" id="right-cell-insertion" type="${type}"><img src="images/dottedpopup_icon2.png" alt="#"></a>
                                                                   </li>
                                                                   <li>
-                                                                      <a href="javascript:void(0);" type="${type}"><img src="images/dottedpopup_icon3.png" alt="#"></a>
+                                                                      <a id="copyField_${fieldID}" data-section-id ="${sectionID}" data-field-id="${fieldID}" class="copyFieldBox"  href="javascript:void(0);" type="${type}"><img src="images/dottedpopup_icon3.png" alt="#"></a>
                                                                   </li>
                                                                   <li>
-                                                                      <a href="javascript:void(0);" type="${type}"><img src="images/dottedpopup_icon4.png" alt="#"></a>
+                                                                      <a id="deleteField_${fieldID}" data-section-id="${sectionID}"  data-field-id="${fieldID}" class="deleteFieldBox"  href="javascript:void(0);" type="${type}"><img src="images/dottedpopup_icon4.png" alt="#"></a>
                                                                   </li>
                                                                   <li>
-                                                                      <a id="editPopup_${fieldID}" class="formSmallBox_edit " type="${type}" href="javascript:void(0);"><img src="images/dottedpopup_icon5.png" alt="#"></a>
+                                                                      <a id="editPopup_${fieldID}" data-section-id ="${sectionID}"  data-field-id="${fieldID}" class="formSmallBox_edit " type="${type}" id="editPopup_${fieldID}" class="formSmallBox_edit " type="${type}" href="javascript:void(0);"><img src="images/dottedpopup_icon5.png" alt="#"></a>
                                                                   </li>
                                                                   <li>
                                                                       <a href="javascript:void(0);" class="sort_handle"><img src="images/dottedpopup_icon6.png" alt="#"></a>
@@ -278,10 +273,10 @@
                                               <a href="javascript:void(0);"><img src="images/blue4_dottes.png" alt="#"></a>
                                           </li>
                                           <li>
-                                              <a href="javascript:void(0);"><img src="images/dottedpopup_icon3.png" alt="#"></a>
+                                              <a id="copySection_${fieldID}" data-section-id ="${sectionID}" data-field-id="${fieldID}" class="copySectionBox" href="javascript:void(0);"><img src="images/dottedpopup_icon3.png" alt="#"></a>
                                           </li>
                                           <li>
-                                              <a href="javascript:void(0);"><img src="images/dottedpopup_icon4.png" alt="#"></a>
+                                              <a id="deleteSection_${fieldID}" data-section-id="${sectionID}"  data-field-id="${fieldID}" class="deleteSectionBox" href="javascript:void(0);"><img src="images/dottedpopup_icon4.png" alt="#"></a>
                                           </li>
                                           <li>
                                               <a class="formSmallBox_edit " href="javascript:void(0);"><img src="images/dottedpopup_icon5.png" alt="#"></a>
@@ -429,7 +424,7 @@
 
             var fieldHtml;
             for (var key in savedFieldData) {
-                if (savedFieldData.hasOwnProperty(key)) { console.log(savedFieldData[key]);
+                if (savedFieldData.hasOwnProperty(key)) {
                      var sectionData  = savedFieldData[key];
                     for (var sectionKey in sectionData)  {
                         var fieldsData  = sectionData[sectionKey].fields;
@@ -437,16 +432,16 @@
                         for (var fieldKey in fieldsData)  {
 
                             let fieldType = fieldsData[fieldKey].type;
-                            let fieldObj = fieldsData[fieldKey];
-                            let field_id = fieldsData[fieldKey].field_id
+                            let fieldObj = fieldsData[fieldKey]; console.log(fieldObj.basic_properties.field_name);
+                            let field_id = fieldsData[fieldKey].field_id;
                             if (fieldType == 'text-input') {
 
-                                fieldHtml = `<div class="form_rowHover " id="form-row-hover-${section_id}">
-                                   <div class="formRow clearfix innerBox" id="innerSection_${section_id}">
+                                fieldHtml = `<div class="form_rowHover section_${section_id}" id="form-row-hover-${section_id}">
+                                   <div class="formRow clearfix innerBox" >
                                       <div class="formCell col12"  id="innerElement_${field_id}">
                                          <div class="form_editRow field-${field_id}">
                                             <div class="form_heading ">
-                                            <span class="textLabel_${field_id}" >${fieldObj.basic_properties.field_name || defaults.messages.text}</span>
+                                            <span class="field_label " id="fieldLabel_${field_id}" >${fieldObj.basic_properties.field_name || defaults.messages.text}</span>
 
                                             <div class="form_editRow_inner">
                                                <div class="controle_row_main">
@@ -454,7 +449,7 @@
                                                   <div class="controle_row_popup"><span>X pos: <b>550</b></span> </div>
                                                </div>
                                                <div class="form_field">
-                                                <input type="text" placeholder="${fieldObj.basic_properties.placeholder}" value="${fieldObj.basic_properties.default_value}" class="textField_${key}"> 
+                                                <input type="text" placeholder="${fieldObj.basic_properties.placeholder}" value="${fieldObj.basic_properties.default_value}" class="field_name" id="fieldName_${field_id}"> 
                                                 
                                                 </div>
                                                <div class="dotted_icon">
@@ -462,9 +457,9 @@
                                                   <ul>
                                                      <li><a href="javascript:void(0);"><img src="images/dottedpopup_icon1.png" alt="#"></a></li>
                                                      <li><a href="javascript:void(0);"><img src="images/dottedpopup_icon2.png" alt="#"></a></li>
-                                                     <li><a id="copyField_${field_id}" data-section-id ="${sectionKey}"  data-field-id="${field_id}" class="copyFieldBox" href="javascript:void(0);"><img src="images/dottedpopup_icon3.png" alt="#"></a></li>
-                                                     <li><a id="deleteField_${field_id}" data-section-id="${sectionKey}"  data-field-id="${field_id}" class="deleteFieldBox" href="javascript:void(0);"><img src="images/dottedpopup_icon4.png" alt="#"></a></li>
-                                                     <li><a id="editPopup_${field_id}" data-section-id ="${sectionKey}"  data-field-id="${field_id}" class="formSmallBox_edit " type="${fieldType}" href="javascript:void(0);"><img src="images/dottedpopup_icon5.png" alt="#"></a></li>
+                                                     <li><a id="copyField_${field_id}" data-section-id ="${section_id}"  data-field-id="${field_id}" class="copyFieldBox" href="javascript:void(0);"><img src="images/dottedpopup_icon3.png" alt="#"></a></li>
+                                                     <li><a id="deleteField_${field_id}" data-section-id="${section_id}"  data-field-id="${field_id}" class="deleteFieldBox" href="javascript:void(0);"><img src="images/dottedpopup_icon4.png" alt="#"></a></li>
+                                                     <li><a id="editPopup_${field_id}" data-section-id ="${section_id}"  data-field-id="${field_id}" class="formSmallBox_edit " type="${fieldType}" href="javascript:void(0);"><img src="images/dottedpopup_icon5.png" alt="#"></a></li>
                                                      <li><a href="javascript:void(0);" class="sort_handle"><img src="images/dottedpopup_icon6.png" alt="#"></a></li>
                                                   </ul>
                                                </div>
@@ -476,8 +471,8 @@
                                    <div class="form_rowHover_popup">
                                       <ul>
                                          <li><a href="javascript:void(0);"><img src="images/blue4_dottes.png" alt="#"></a></li>
-                                         <li><a href="javascript:void(0);"><img src="images/dottedpopup_icon3.png" alt="#"></a></li>
-                                         <li><a href="javascript:void(0);"><img src="images/dottedpopup_icon4.png" alt="#"></a></li>
+                                         <li><a id="copySection_${field_id}" data-section-id ="${section_id}"  data-field-id="${field_id}" class="copySectionBox" href="javascript:void(0);"><img src="images/dottedpopup_icon3.png" alt="#"></a></li>
+                                         <li><a id="deleteSection_${field_id}" data-section-id="${section_id}"  data-field-id="${field_id}" class="deleteSectionBox" href="javascript:void(0);"><img src="images/dottedpopup_icon4.png" alt="#"></a></li>
                                          <li><a class="formSmallBox_edit " href="javascript:void(0);"><img src="images/dottedpopup_icon5.png" alt="#"></a></li>
                                       </ul>
                                    </div>
@@ -487,18 +482,9 @@
 
                             }
                         }
-
                     }
-
-
                 }
-
-
             }
-
-
-
-
 
         }
 
@@ -520,27 +506,60 @@
             window.localStorage.setItem('schema', JSON.stringify(currentfieldSchema));
         };
 
+
+        /**
+         * Remove the section
+         * @param deletedSectionId
+         */
+        var removeSection = function(deletedSectionId) {
+            var currentSectionSchema = JSON.parse(localStorage.getItem("schema")) || {};
+            console.log(deletedSectionId);
+            for (var sectionKey in currentSectionSchema) {
+                delete currentSectionSchema[sectionKey][deletedSectionId];
+            }
+            window.localStorage.setItem('schema', JSON.stringify(currentSectionSchema));
+        }
+        // remove field
         $(document).on('click','.deleteFieldBox',function (e) {
              var deletedFieldId  = extractId($(this).attr('id'));
              $('#innerElement_' + deletedFieldId).remove();
              removeField(deletedFieldId);
         });
 
+        // remove  section/ group
+        $(document).on('click','.deleteSectionBox',function (e) {
+            var deletedSectionId  = parseInt($(this).attr('data-section-id'));
+            console.log(deletedSectionId);
+            console.log($('#section_' + deletedSectionId)   );
+
+
+            $('.section_' + deletedSectionId).remove();
+            removeSection(deletedSectionId);
+        });
+
+
+
+        // copy section
+
+        $(document).on('click','.copySectionBox',function () {
+            var currentSectionSchema = JSON.parse(localStorage.getItem("schema")) || {};
+            var currentId  = parseInt($(this).attr('data-section-id'));
+            let cloneSection = $('.section_'+ currentId).clone();
+            console.log(currentId);
+            console.log(cloneSection.html());
+            cloneSection.insertBefore("#dropForm");
+        });
+
+
+        // copy fields
         $("body").on('click','.copyFieldBox',function (e) {
 
 
             var currentfieldSchema = JSON.parse(localStorage.getItem("schema")) || {};
             var currentId = Object.keys(currentfieldSchema).length;
-
-
             let current_id = extractId($(this).attr('id'));
-
             let cloneElement = $('#innerElement_' + current_id).clone();
-
-
             var $editPopup = cloneElement.find("#editPopup_" + currentId);
-            currentId++;
-            console.log('*****************after increment*****************');
 
             $editPopup.attr("id", "editPopup_" + currentId);
             cloneElement.find('.field_label').prop('id', 'fieldLabel_' +currentId);
@@ -560,12 +579,9 @@
             console.log('grooup id--------');
             console.log(groupId);
             console.log(cloneElement.parents);
-
-            cloneElement.appendTo("#group_"+groupId);
+            cloneElement.appendTo("#section_"+groupId);
             // set id to current copy field
-
              var currentElement = cloneElement.find("#copyField_"+fieldId);
-
             currentElement.prop('id',"copyField_"+currentId);
 
             //cloneElement.prop('class', 'textLabel_' + fieldId);
@@ -599,7 +615,7 @@
             var fieldsData = getFieldSchema(fieldId);
 
             let fieldHeadingHtml = fieldHeading(type);
-            let basicFieldHtml = basicTab(type, fieldsData);
+            let basicFieldHtml = basicTab(obj,type, fieldsData);
             var validateFieldHtml = validateMessageTab(type, fieldsData);
             var formatFieldHtml = formatTab(type, fieldsData);
             var valueSettingFieldHtml = valueSettingTab(type, fieldsData);
@@ -607,8 +623,8 @@
             var helpMessageFieldHtml = helpMessageTab(type, fieldsData);
 
             let popupHtml = `<div class="all_popup formEdit_main_popup fieldPopup_${fieldId}" >
-                                    <input type="hidden" value="${fieldId}" class="field_id" name="popup_id">
-                                    <input type="hidden" value="${sectionId}" class="section_id" name="popup_id">
+                                    <input type="hidden" value="${fieldId}" class="field_id" name="field_id">
+                                    <input type="hidden" value="${sectionId}" class="section_id" name="section_id">
                                     <div class="all_popup_inner">
                                         <div class="popup_table">
                                             <div class="popup_tableCell">
@@ -723,7 +739,9 @@
             }
             return fieldHeadingHtml;
         };
-        var basicTab = function (type, fieldsData) {
+        var basicTab = function (obj,type, fieldsData) {
+
+
             var basicFieldHtml = '';
             switch (type) {
                 case 'text-input':
@@ -885,7 +903,7 @@
                                             <div class="formRow clearfix">
                                                 <div class="formCell col12">
                                                     <div class="form_saveBtn">
-                                                        <input class="all_buttons"  tab-name="basic_tab" field-type="${type}" type="submit" value="Save">
+                                                        <input class="all_buttons" current-field="${obj}"  tab-name="basic_tab" field-type="${type}" type="submit" value="Save">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1183,156 +1201,147 @@
 
             let fieldType = $(this).attr('field-type');
             let fieldId = $(".field_id").val();
-            let sectionId = $(".section_id").val();
+            let sectionId = parseInt($(".section_id").val());
+            let currentFieldAttr = $(this).attr('current-field');
+
+            console.log($(this));
 
             let tabName = $(this).attr('tab-name');
             let fieldsArr = JSON.parse(localStorage.getItem("schema")) || {};
-            console.log(fieldsArr);
-
+            console.log(sectionId);
             for (var sectionkey in fieldsArr) {
 
                 var sectionData = fieldsArr[sectionkey];
-                if (sectionData[sectionId].section_id == sectionId) {
+                if (typeof sectionData[sectionId] !== 'undefined') {
+                    if (sectionData[sectionId].section_id == sectionId) {
+                        var sectionFields = sectionData[sectionId].fields;
+                        var field_key = 0;
+                        for (var singleField in sectionFields) {
+
+                            var single_field = sectionFields[singleField];
+
+                            if (sectionFields[singleField].field_id == fieldId) {
+
+                                let fieldType = sectionFields[singleField].type;
+                                if (fieldType == 'text-input') {
+
+                                    if (tabName == 'basic_tab') {
+
+                                        var fieldName = $("input[name='field_name']").val();
+                                        let basicFieldId = $("input[name='field_id']").val();
+                                        let defaultValue = $("input[name='default_value']").val();
+                                        let placeHolder = $("input[name='placeholder']").val();
+                                        // checkboxes
+
+                                        let required = $("input[name='required']").is(":checked");
+                                        let add_picture = $("input[name='add_picture']").is(":checked");
+                                        let field_under_label = $("input[name='field_under_label']").is(":checked");
+                                        let is_preloaded_paragraph = $("input[name='is_preloaded_paragraph']").is(":checked");
+                                        let view_only = $("input[name='view_only']").is(":checked");
+                                        let hide_field_label = $("input[name='hide_field_label']").is(":checked");
+                                        let hide_label = $("input[name='hide_label']").is(":checked");
+                                        let add_notes = $("input[name='add_notes']").is(":checked");
+                                        let exclude_from_pdf_report = $("input[name='exclude_from_pdf_report']").is(":checked");
 
 
-                    var sectionFields = sectionData[sectionId].fields;
-                    var field_key = 0;
-                    for (var singleField in sectionFields) {
+                                        let basicObj = {};
 
-                        var single_field  = sectionFields[singleField];
+                                        basicObj.field_name = fieldName;
+                                        basicObj.field_id = basicFieldId;
+                                        basicObj.default_value = defaultValue;
+                                        basicObj.placeholder = placeHolder;
+                                        basicObj.required = required;
+                                        basicObj.add_picture = add_picture;
+                                        basicObj.field_under_label = field_under_label;
+                                        basicObj.is_preloaded_paragraph = is_preloaded_paragraph;
+                                        basicObj.view_only = view_only;
+                                        basicObj.hide_field_label = hide_field_label;
+                                        basicObj.hide_label = hide_label;
+                                        basicObj.add_notes = add_notes;
+                                        basicObj.exclude_from_pdf_report = exclude_from_pdf_report;
+                                        single_field.basic_properties = basicObj;
 
-                        if (sectionFields[singleField].field_id == fieldId) {   console.log("match****************");
-
-                            let fieldType = sectionFields[singleField].type;
-                            if (fieldType == 'text-input') {
-
-                                if (tabName == 'basic_tab') {
-
-                                    var fieldName = $("input[name='field_name']").val();
-                                    let fieldId = $("input[name='field_id']").val();
-                                    let defaultValue = $("input[name='default_value']").val();
-                                    let placeHolder = $("input[name='placeholder']").val();
-                                    // checkboxes
-
-                                    let required = $("input[name='required']").is(":checked");
-                                    let add_picture = $("input[name='add_picture']").is(":checked");
-                                    let field_under_label = $("input[name='field_under_label']").is(":checked");
-                                    let is_preloaded_paragraph = $("input[name='is_preloaded_paragraph']").is(":checked");
-                                    let view_only = $("input[name='view_only']").is(":checked");
-                                    let hide_field_label = $("input[name='hide_field_label']").is(":checked");
-                                    let hide_label = $("input[name='hide_label']").is(":checked");
-                                    let add_notes = $("input[name='add_notes']").is(":checked");
-                                    let exclude_from_pdf_report = $("input[name='exclude_from_pdf_report']").is(":checked");
+                                        console.log(fieldName);
+                                        console.log(("#fieldName_" + fieldId));
+                                        $("#fieldLabel_" + fieldId).html(fieldName);
+                                        $("#fieldName_"+fieldId).attr('placeholder', placeHolder);
+                                        $("#fieldName_"+fieldId).val(defaultValue);
 
 
-                                    let basicObj = {};
+                                    } else if (tabName == 'validate_tab') {
 
-                                    basicObj.field_name = fieldName;
-                                    basicObj.field_id = fieldId;
-                                    basicObj.default_value = defaultValue;
-                                    basicObj.placeholder = placeHolder;
-                                    basicObj.required = required;
-                                    basicObj.add_picture = add_picture;
-                                    basicObj.field_under_label = field_under_label;
-                                    basicObj.is_preloaded_paragraph = is_preloaded_paragraph;
-                                    basicObj.view_only = view_only;
-                                    basicObj.hide_field_label = hide_field_label;
-                                    basicObj.hide_label = hide_label;
-                                    basicObj.add_notes = add_notes;
-                                    basicObj.exclude_from_pdf_report = exclude_from_pdf_report;
+                                        let errorMessage = $.trim($("#error_message").val());
+                                        let regExpression = $("input[name='reg_expression']").val();
+                                        let defualtRegex = $("input[name='default_regex']").val();
+                                        let validateObj = {};
 
-                                    console.log('***********Baisc Tab***********');
-                                    console.log(basicObj);
-                                    console.log(fieldName);
-                                    single_field.basic_properties = basicObj;
+                                        let selectRegexCondition = 'N/A';
+                                        $(".select_regex_condition li").each(function (index, item) {
+                                            if ($(this).hasClass('active')) {
+                                                selectRegexCondition = $(this).attr('regex-data');
+                                            }
+                                        });
+                                        validateObj.select_validate_condition = selectRegexCondition;
+                                        validateObj.regular_expression = regExpression;
+                                        validateObj.error_message = errorMessage;
 
-                                    console.log('**********8sibgle');
-                                    console.log(singleField);
-                                    console.log(("#fieldLabel_"+fieldId));
-                                    $("#fieldLabel_"+fieldId).html(fieldName);
-                                    $("#fieldName_"+fieldId).attr('placeholder',placeHolder);
-                                    $(".textField_"+fieldId).val(defaultValue);
+                                        single_field.validate_properties = validateObj;
 
 
-                                } else if (tabName == 'validate_tab') {
-
-                                    let errorMessage = $.trim($("#error_message").val());
-                                    let regExpression = $("input[name='reg_expression']").val();
-                                    let defualtRegex = $("input[name='default_regex']").val();
-                                    let validateObj = {};
-
-                                    let selectRegexCondition = 'N/A';
-                                    $(".select_regex_condition li").each(function (index, item) {
-                                        if ($(this).hasClass('active')) {
-                                            selectRegexCondition = $(this).attr('regex-data');
-                                        }
-                                    });
-                                    validateObj.select_validate_condition = selectRegexCondition;
-                                    validateObj.regular_expression = regExpression;
-                                    validateObj.error_message = errorMessage;
-
-                                    single_field.validate_properties = validateObj;
+                                    } else if (tabName == 'format_tab') {
 
 
-                                } else if (tabName == 'format_tab') {
+                                        let labelNameFormat = $("input[name='label_name_format']").val();
+                                        let fieldNameFormat = $("input[name='field_name_format']").val();
+
+                                        let formatObj = {};
+                                        formatObj.label_name_format = labelNameFormat;
+                                        formatObj.field_name_format = fieldNameFormat;
+                                        single_field.fields.format_properties = formatObj;
+
+                                    } else if (tabName == 'setting_tab') {
+
+                                    } else if (tabName == 'report_tab') {
+
+                                        let is_process_field_reporting = $("input[name='is_process_field_reporting']").is(":checked");
+                                        //Start Date Plus
+                                        let select_process_category_variable = 'N/A';
+                                        $(".report_category_dropdown li").each(function (index, item) {
+                                            if ($(this).hasClass('active')) {
+                                                select_process_category_variable = $(this).attr('report-data');
+                                            }
+                                        });
+
+                                        let reportObj = {};
+                                        reportObj.is_process_field_reporting = is_process_field_reporting;
+                                        reportObj.select_process_category_variable = select_process_category_variable;
+                                        single_field.report_properties = reportObj;
 
 
-                                    let labelNameFormat = $("input[name='label_name_format']").val();
-                                    let fieldNameFormat = $("input[name='field_name_format']").val();
+                                    } else if (tabName == 'help_tab') {
 
-                                    let formatObj = {};
-                                    formatObj.label_name_format = labelNameFormat;
-                                    formatObj.field_name_format = fieldNameFormat;
-                                    single_field.fields.format_properties = formatObj;
+                                        let helpMessage = $(".help_message").val();
+                                        let helpObj = {};
+                                        helpObj.help_message = helpMessage;
+                                        single_field.help_properties = helpObj;
 
-                                } else if (tabName == 'setting_tab') {
+                                    }
 
-                                } else if (tabName == 'report_tab') {
-
-                                    let is_process_field_reporting = $("input[name='is_process_field_reporting']").is(":checked");
-                                    //Start Date Plus
-                                    let select_process_category_variable = 'N/A';
-                                    $(".report_category_dropdown li").each(function (index, item) {
-                                        if ($(this).hasClass('active')) {
-                                            select_process_category_variable = $(this).attr('report-data');
-                                        }
-                                    });
-
-                                    let reportObj = {};
-                                    reportObj.is_process_field_reporting = is_process_field_reporting;
-                                    reportObj.select_process_category_variable = select_process_category_variable;
-                                    single_field.report_properties = reportObj;
-
-
-                                } else if (tabName == 'help_tab') {
-
-                                    let helpMessage = $(".help_message").val();
-                                    let helpObj = {};
-                                    helpObj.help_message = helpMessage;
-                                    single_field.help_properties = helpObj;
+                                    sectionFields[field_key] = single_field;
+                                    fieldsArr[sectionkey] = sectionData;
 
                                 }
-
-                                sectionFields[field_key] = single_field;
-                                fieldsArr[sectionkey] = sectionData;
-
-
-                                //
-
-
+                                // update data in localStorage on id base
+                                window.localStorage.setItem('schema', JSON.stringify(fieldsArr));
+                                break;
                             }
-                            console.log('section keys***********************');
-                            console.log(sectionId);
-                            console.log(fieldId);
-                            // update data in localStorage on id base
-                            window.localStorage.setItem('schema', JSON.stringify(fieldsArr));
-                            break;
-                        }
-                        field_key = field_key + 1;
+                            field_key = field_key + 1;
 
+                        }
                     }
+                    break;
                 }
-                break;
+
             }
 
             $("body").removeClass("hidden");
@@ -1505,6 +1514,19 @@
 
 
 
+        var showTinymceEditor = function () {
+
+            tinymce.init({
+                selector: '.mytextarea',
+                branding: false,
+                theme: 'modern',
+                plugins: 'print preview fullpage powerpaste searchreplace autolink directionality advcode visualblocks visualchars fullscreen image link media mediaembed template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount tinymcespellchecker a11ychecker imagetools textpattern help formatpainter permanentpen pageembed tinycomments mentions linkchecker',
+                toolbar: 'fontselect | fontsizeselect color | bold italic strikethrough forecolor backcolor | alignleft aligncenter alignright alignjustify bullist numlist | link unlink image  | forecolor backcolor emoticons ',
+
+            });
+        }
+
+
     };
 
 
@@ -1522,17 +1544,7 @@
 
     };
 
-    var showTinymceEditor = function () {
 
-      tinymce.init({
-          selector: '.mytextarea',
-          branding: false,
-          theme: 'modern',
-          plugins: 'print preview fullpage powerpaste searchreplace autolink directionality advcode visualblocks visualchars fullscreen image link media mediaembed template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount tinymcespellchecker a11ychecker imagetools textpattern help formatpainter permanentpen pageembed tinycomments mentions linkchecker',
-          toolbar: 'fontselect | fontsizeselect color | bold italic strikethrough forecolor backcolor | alignleft aligncenter alignright alignjustify bullist numlist | link unlink image  | forecolor backcolor emoticons ',
-
-      });
-  }
 
 
 
