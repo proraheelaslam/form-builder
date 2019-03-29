@@ -9,13 +9,13 @@
                 removeMessage: 'Remove Element',
                 required: 'Required',
                 text: 'Text Field',
-                textarea: 'Text Area',
-                number: 'Number',
+                // /textarea: 'Text Area',
+                // number: 'Number',
             },
             images: {
                 text: 'images/rightbar_icon11.png',
-                textarea: 'images/rightbar_icon9.png',
-                number: 'images/rightbar_icon2.png'
+                // textarea: 'images/rightbar_icon9.png',
+                // number: 'images/rightbar_icon2.png'
             }
         };
         /* object full of useful utilities */
@@ -32,12 +32,12 @@
                 label: opts.messages.text,
                 image: opts.images.text
             },
-            {
+            /*{
                 type: 2,
                 'class': 'textarea-input',
                 label: opts.messages.textarea,
                 image: opts.images.textarea
-            }
+            }*/
 
         ];
         // Create form builder canvas
@@ -46,6 +46,7 @@
 
         /*******************Loop through create right sidebar menu list *****************/
         for (var i = 0; i < frmbFields.length; i++) {
+
             let $anchor = `<a href="javascript:void(0);"><i><img src="${frmbFields[i].image}" alt="#"></i><span>${frmbFields[i].label}</span></a>`;
             let fieldList = $("<li/>", {
                 'class': frmbFields[i].class,
@@ -61,15 +62,9 @@
         var section_id = 1000;
         var fieldID = 1;
         var sectionID;
-
-
-       /* var ulObj = $('#dropForm').sortable({
-
-            drop: function(event, ui) {
-                console.log('Drppped Element');
-            },
-
-        });*/
+        var dropText = `<span class="start_placeholder">Drag and Drop the Form Element</span>`;
+        $(".form_rowHover_parent").append(dropText);
+        console.log(dropText);
 
 
         var ulObj = $('#dropForm').sortable({
@@ -77,16 +72,13 @@
             opacity: 0.9,
             handle: ".sort_section",//".sort_handle",
             receive: function (event, ui) {
-                console.log('receive element');
+               $(".form_rowHover_parent > span").remove();
             },
             update: function (event, ui) {
 
             },
             stop: function (event, ui) {
 
-                console.log("event", event);
-                console.log("ui", ui.item);
-                console.log('sortable called');
 
                 if (ui.item.attr("name")) {
                     // save default object in localstorage
@@ -118,30 +110,21 @@
                     saveDefaultFieldsObject(ui.item, field_section_id, field_id);
                     setElemenType = ui.item;
                     // setHTML on basis of type
-                    console.log("attribute name: ", ui.item.attr("name"));
+
                     var fieldHtml = setFieldHtml(ui.item, field_section_id, field_id);
                     ui.item.before(fieldHtml);
-                    ui.item.remove();
 
+                    ui.item.remove();
+                   /// applyResizeable(field_id, section_id);
                     // end dyanmic field generate
 
                     // ====================== APPLY RESIZEABLE =============================
 
+
                     let tempLastId = field_id;
-                    let elemId = ".formRow-" + (tempLastId) + " " + ".left-resizeable-" + tempLastId;
-
-                    $(elemId).resizable({
-                        alsoResizeReverse: ".right-resizeable-" + tempLastId,
-                        handles: {
-                            e: "#handle",
-                        },
-                        resize: function (event, ui) {
-                            console.log("resizing...");
-                        },
-                        stop: function (event, ui) {
-                        }
-                    });
-
+                    let elemId = "#formRow-" + (tempLastId) + " " + ".left-resizeable-" + tempLastId;
+                    //$(elemId).css({'width':width});
+                    applyResizeable(field_id,field_section_id);
                     // ====================== APPLY RESIZEABLE =============================
                 }
             }
@@ -150,14 +133,16 @@
         $(".add_element_list li").draggable({
             cancel: ".stopDraggable",
             cursorAt: {left: 125, top: 15},
-            connectToSortable:"#dropForm",
+            connectToSortable: "#dropForm",
             helper: 'clone',
             revert: false,
             start: function (event, ui) {
+
             },
             drag: function (event, ui) {
             },
             stop: function (event, ui) {
+
             },
 
         });
@@ -181,67 +166,24 @@
          * @param obj
          */
         var saveDefaultFieldsObject = function (obj, sectionID, fieldID) {
+
             let type = $(obj).attr("name");
             let fieldObj = {};
-
             switch (type) {
                 case 'text-input':
-                    fieldObj = {
-                        "type": type,
-                        "field_id": fieldID,
-                        "basic_properties": {
-                            "field_name": '',
-                            "field_id": '',
-                            "default_value": '',
-                            "placeholder": '',
-                            "required": false,
-                            "hide_label": false,
-                            "add_picture": false,
-                            "field_under_label": false,
-                            "is_preloaded_paragraph": false,
-                            "view_only": false,
-                            "hide_field_label": false,
-                            "add_notes": false,
-                            "exclude_from_pdf_report": false,
-
-                        },
-                        "validate_properties": {
-                            "select_validate_condition": '',
-                            "regular_expression": '',
-                            "error_message": '',
-                        },
-                        "format_properties": {
-                            "label_name_format": '',
-                            "field_name_format": '',
-                        },
-                        "setting_properties": {
-                            "value_setting_option": '',
-                            "value_setting_text": ''
-                        },
-                        "report_properties": {
-                            "is_process_field_reporting": false,
-                            "select_process_category_variable": '',
-                        },
-                        "help_properties": {
-                            "help_message": '',
-
+                    fieldObj = textFieldJson(type, fieldID);
+                    var defaultSectionObj = {
+                        [sectionID]: {
+                            "name": "section_name",
+                            "setting": "ON",
+                            "section_id": sectionID,
+                            "fields": [fieldObj]
                         }
                     };
+
                     break;
+
             }
-
-            var defaultSectionObj = {
-                [sectionID]: {
-                    "name": "section_name",
-                    "setting": "ON",
-                    "section_id": sectionID,
-                    "fields": [fieldObj]
-                }
-            };
-
-            /* var defaultObj = {
-                 "section":defaultSectionObj
-             };*/
 
             var fieldSchema = JSON.parse(localStorage.getItem("schema")) || [];
             fieldSchema.push(defaultSectionObj);
@@ -256,243 +198,200 @@
 
             switch (type) {
                 case 'text-input':
-                    fieldHtml += `<div class="form_rowHover group_container " id="section_${sectionID}" >
-                                  <div class="formRow clearfix element_main_row_container formRow-${fieldID} innerBox" >
-                                      <div class="element_main_cell">
-                                          <div class="element_inline_cell">
-                                              <div class="formCell left-resizeable left-resizeable-${fieldID}">
-                                                  <div class="form_heading"><span><br></span></div>
-                                                  <a id="handle" class="ui-resizable-handle ui-resizable-e resizeHandler_cstm"></a>
-                                              </div>
-                                              <div id="innerElement_${fieldID}" class="formCell  col12 right-resizeable right-resizeable-${fieldID}" style="padding: 0px">
-                                                  <div class="form_editRow">
-                                                      <div class="form_heading form_heading_dev" >
-                                                      <span class="field_label" id="fieldLabel_${fieldID}" >${defaults.messages.text}</span></div>
-                                                      <div class="form_editRow_inner">
-                                                          <div class="controle_row_main"></div>
-                                                          <div class="form_field">
-                                                              <input type="text" placeholder="" value="" class="filed_name" id="fieldName_${fieldID}"> </div>
-                                                          <div class="dotted_icon">
-                                                              <a class="dotted_btn" href="javascript:void(0);"><img src="images/dotted_img.png" alt="#"></a>
-                                                              <ul>
-                                                                  <li>
-                                                                      <a href="javascript:void(0);" id="left-cell-insertion" data-section-id="${sectionID}"  data-field-id="${fieldID}" type="${type}"><img src="images/dottedpopup_icon1.png" alt="#"></a>
-                                                                  </li>
-                                                                  <li>
-                                                                      <a href="javascript:void(0);" id="right-cell-insertion" type="${type}" data-section-id="${sectionID}"  data-field-id="${fieldID}"><img src="images/dottedpopup_icon2.png" alt="#"></a>
-                                                                  </li>
-                                                                  <li>
-                                                                      <a id="copy-row-in-section" data-section-id ="${sectionID}" data-field-id="${fieldID}" class=""  href="javascript:void(0);" type="${type}"><img src="images/dottedpopup_icon3.png" alt="#"></a>
-                                                                  </li>
-                                                                  <li>
-                                                                      <a id="delete-row-from-section" data-section-id="${sectionID}"  data-field-id="${fieldID}" class="deleteFieldBox"  href="javascript:void(0);" type="${type}"><img src="images/dottedpopup_icon4.png" alt="#"></a>
-                                                                  </li>
-                                                                  <li>
-                                                                      <a id="editPopup_${fieldID}" data-section-id ="${sectionID}"  data-field-id="${fieldID}" class="formSmallBox_edit " type="${type}" id="editPopup_${fieldID}" class="formSmallBox_edit " type="${type}" href="javascript:void(0);"><img src="images/dottedpopup_icon5.png" alt="#"></a>
-                                                                  </li>
-                                                                  <li>
-                                                                      <a href="javascript:void(0);" class="sort_handle"><img src="images/dottedpopup_icon6.png" alt="#"></a>
-                                                                  </li>
-                                                              </ul>
-                                                          </div>
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div id="formBuilder"></div>
-                                  <div class="form_rowHover_popup ">
-                                      <ul>
-                                          <li class="sort_section">
-                                              <a href="javascript:void(0);"><img src="images/blue4_dottes.png" alt="#"></a>
-                                          </li>
-                                          <li>
-                                              <a id="copySection_${sectionID}" data-section-id ="${sectionID}" data-field-id="${fieldID}" class="copySectionBox" href="javascript:void(0);"><img src="images/dottedpopup_icon3.png" alt="#"></a>
-                                          </li>
-                                          <li>
-                                              <a id="deleteSection_${sectionID}" data-section-id="${sectionID}"  data-field-id="${fieldID}" class="deleteSectionBox" href="javascript:void(0);"><img src="images/dottedpopup_icon4.png" alt="#"></a>
-                                          </li>
-                                          <li>
-                                              <a class="formSmallBox_edit " href="javascript:void(0);"><img src="images/dottedpopup_icon5.png" alt="#"></a>
-                                          </li>
-                                      </ul>
-                                  </div>
-                              </div>`;
+                    fieldHtml += textFieldHtml(type, obj, sectionID, fieldID, defaults);
                     break;
                 default:
-                    fieldHtml += `<div class="form_rowHover">
-                                   <div class="formRow clearfix">
-                                      <div class="formCell col12">
-                                         <div class="form_editRow field-${fieldID}">
-                                            <div class="form_heading"><span>Number Field</span></div>
-                                            <div class="form_editRow_inner">
-                                               <div class="controle_row_main">
-                                                  <a href="javascript:void(0);"></a> 
-                                                  <div class="controle_row_popup"><span>X pos: <b>550</b></span> </div>
-                                               </div>
-                                               <div class="form_field"> <input type="text" placeholder=""> </div>
-                                               <div class="dotted_icon">
-                                                  <a class="dotted_btn" href="javascript:void(0);"><img src="images/dotted_img.png" alt="#"></a> 
-                                                  <ul>
-                                                     <li><a href="javascript:void(0);"><img src="images/dottedpopup_icon1.png" alt="#"></a></li>
-                                                     <li><a href="javascript:void(0);"><img src="images/dottedpopup_icon2.png" alt="#"></a></li>
-                                                     <li><a href="javascript:void(0);"><img src="images/dottedpopup_icon3.png" alt="#"></a></li>
-                                                     <li><a href="javascript:void(0);"><img src="images/dottedpopup_icon4.png" alt="#"></a></li>
-                                                     <li><a id=" editPopup_${fieldID}" class="formSmallBox_edit" type="${type}" href="javascript:void(0);"><img src="images/dottedpopup_icon5.png" alt="#"></a></li>
-                                                     <li><a href="javascript:void(0);" class="sort_handle"><img src="images/dottedpopup_icon6.png" alt="#"></a></li>
-                                                  </ul>
-                                               </div>
-                                            </div>
-                                         </div>
-                                      </div>
-                                   </div>
-                                   <div id="formBuilder"></div>
-                                   <div class="form_rowHover_popup">
-                                      <ul>
-                                         <li><a href="javascript:void(0);"><img src="images/blue4_dottes.png" alt="#"></a></li>
-                                         <li><a href="javascript:void(0);"><img src="images/dottedpopup_icon3.png" alt="#"></a></li>
-                                         <li><a href="javascript:void(0);"><img src="images/dottedpopup_icon4.png" alt="#"></a></li>
-                                         <li><a class="formSmallBox_edit" href="javascript:void(0);"><img src="images/dottedpopup_icon5.png" alt="#"></a></li>
-                                      </ul>
-                                   </div>
-                                </div>`;
+                    fieldHtml += defaultField(type, obj, sectionID, fieldID, defaults);
                     break;
             }
-
             return fieldHtml;
-
 
         };
 
+        /**
+         * Apply resize on control
+         * @param lastIdCounter
+         */
+        var applyResizeable = function (nextFieldId,section_id='',width=null,padding= null) {
 
-        // Display the right sidebar control menus
-        var copyRowInSection = function (type, sectionId, fieldId) {
+            let tempLastId = nextFieldId || fieldID;
+            let elemId = ".left-resizeable-" + tempLastId;
+            $(elemId).css({'width':width});
+            $(elemId).resizable({
+                alsoResizeReverse: ".right-resizeable-" + tempLastId,
+                handles: {
+                    e: "#handle",
+                },
+                resize: function (event, ui) {
 
-            let fieldHtml = '';
+                    let fieldWidth = $(ui.element).closest('.left-resizeable-'+tempLastId)[0].style.width;
+                    let currentSection = JSON.parse(localStorage.getItem('schema')) || {};
+                    let sectionSchema = currentSection.find(function (v, index) {
+                        if (v.hasOwnProperty(section_id)) {
+                            return true;
+                        }
+                    });
+                    let currentFieldObj = {};
+                    let currentFields = sectionSchema[section_id]["fields"];
+                    currentFieldObj = currentFields.find(function (f) {
+                        if (f.field_id == tempLastId) {
+                            return true;
+                        }
+                    });
+                    let currentFieldIndex = currentSection.indexOf(currentFieldObj);
+                    currentFieldObj.field_resize.width = fieldWidth;
+                    $.each(currentSection, (index, value) =>{
+                        if (value.hasOwnProperty(section_id)) {
+                            currentSection[index][section_id]["fields"][currentFieldIndex] = currentFieldObj;
+                            return;
+                        }
+                    });
+                    window.localStorage.setItem('schema', JSON.stringify(currentSection));
+                },
+                stop: function (event, ui) {
 
-            switch (type) {
-                case 'text-input':
-                    fieldHtml += `<div class="formRow clearfix element_main_row_container formRow-${fieldId} innerBox" >
-                                      <div class="element_main_cell">
-                                          <div class="element_inline_cell">
-                                              <div class="formCell left-resizeable left-resizeable-${fieldId}">
-                                                  <div class="form_heading"><span><br></span></div>
-                                                  <a id="handle" class="ui-resizable-handle ui-resizable-e resizeHandler_cstm"></a>
-                                              </div>
-                                              <div id="innerElement_${fieldId}" class="formCell  col12 right-resizeable right-resizeable-${fieldId}" style="padding: 0px">
-                                                  <div class="form_editRow">
-                                                      <div class="form_heading form_heading_dev" >
-                                                      <span class="field_label" id="fieldLabel_${fieldId}" >${defaults.messages.text}</span></div>
-                                                      <div class="form_editRow_inner">
-                                                          <div class="controle_row_main"></div>
-                                                          <div class="form_field">
-                                                              <input type="text" placeholder="" value="" class="filed_name" id="fieldName_${fieldId}"> </div>
-                                                          <div class="dotted_icon">
-                                                              <a class="dotted_btn" href="javascript:void(0);"><img src="images/dotted_img.png" alt="#"></a>
-                                                              <ul>
-                                                                  <li>
-                                                                      <a href="javascript:void(0);" id="left-cell-insertion" data-section-id="${sectionId}"  data-field-id="${fieldId}" type="${type}"><img src="images/dottedpopup_icon1.png" alt="#"></a>
-                                                                  </li>
-                                                                  <li>
-                                                                      <a href="javascript:void(0);" id="right-cell-insertion" type="${type}" data-section-id="${sectionId}"  data-field-id="${fieldId}"><img src="images/dottedpopup_icon2.png" alt="#"></a>
-                                                                  </li>
-                                                                  <li>
-                                                                      <a id="copy-row-in-section" data-section-id ="${sectionId}" data-field-id="${fieldId}" href="javascript:void(0);" type="${type}"><img src="images/dottedpopup_icon3.png" alt="#"></a>
-                                                                  </li>
-                                                                  <li>
-                                                                      <a id="delete-row-from-section" data-section-id="${sectionId}"  data-field-id="${fieldId}" class="deleteFieldBox"  href="javascript:void(0);" type="${type}"><img src="images/dottedpopup_icon4.png" alt="#"></a>
-                                                                  </li>
-                                                                  <li>
-                                                                      <a id="editPopup_${fieldId}" data-section-id ="${sectionId}"  data-field-id="${fieldId}" class="formSmallBox_edit " type="${type}" id="editPopup_${fieldId}" class="formSmallBox_edit " type="${type}" href="javascript:void(0);"><img src="images/dottedpopup_icon5.png" alt="#"></a>
-                                                                  </li>
-                                                                  <li>
-                                                                      <a href="javascript:void(0);" class="sort_handle"><img src="images/dottedpopup_icon6.png" alt="#"></a>
-                                                                  </li>
-                                                              </ul>
-                                                          </div>
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                      </div>
-                                  </div>`;
-                    break;
-            }
-
-            return fieldHtml;
+                }
+            });
         };
 
         renderSavedFields();
-
         /**
          * @render default fields
          */
         function renderSavedFields() {
 
             let savedFieldData = JSON.parse(localStorage.getItem("schema")) || {};
-
-
             var fieldHtml;
-            for (var key in savedFieldData) {
-                if (savedFieldData.hasOwnProperty(key)) {
-                    var sectionData = savedFieldData[key];
-                    for (var sectionKey in sectionData) {
-                        var fieldsData = sectionData[sectionKey].fields;
-                        var section_id = sectionData[sectionKey].section_id;
-                        for (var fieldKey in fieldsData) {
 
-                            let fieldType = fieldsData[fieldKey].type;
-                            let fieldObj = fieldsData[fieldKey];
-                            console.log(fieldObj.basic_properties.field_name);
-                            let field_id = fieldsData[fieldKey].field_id;
-                            if (fieldType == 'text-input') {
+            if (savedFieldData.length > 0) {
+                $(".form_rowHover_parent > span").remove();
+                for (var key in savedFieldData) {
 
-                                fieldHtml = `<div class="form_rowHover " id="section_${section_id}">
-                                   <div class="formRow clearfix innerBox" >
-                                      <div class="formCell col12"  id="innerElement_${field_id}">
-                                         <div class="form_editRow field-${field_id}">
-                                            <div class="form_heading ">
-                                            <span class="field_label " id="fieldLabel_${field_id}" >${fieldObj.basic_properties.field_name || defaults.messages.text}</span>
+                    if (savedFieldData.hasOwnProperty(key)) {
+                        var sectionData = savedFieldData[key];
 
-                                            <div class="form_editRow_inner">
-                                               <div class="controle_row_main">
-                                                  <a href="javascript:void(0);"></a> 
-                                                  <div class="controle_row_popup"><span>X pos: <b>550</b></span> </div>
-                                               </div>
-                                               <div class="form_field">
-                                                <input type="text" placeholder="${fieldObj.basic_properties.placeholder}" value="${fieldObj.basic_properties.default_value}" class="field_name" id="fieldName_${field_id}"> 
-                                                
-                                                </div>
-                                               <div class="dotted_icon">
-                                                  <a class="dotted_btn" href="javascript:void(0);"><img src="images/dotted_img.png" alt="#"></a> 
-                                                  <ul>
-                                                     <li><a href="javascript:void(0);"><img src="images/dottedpopup_icon1.png" alt="#"></a></li>
-                                                     <li><a href="javascript:void(0);"><img src="images/dottedpopup_icon2.png" alt="#"></a></li>
-                                                     <li><a id="copy-row-in-section" data-section-id ="${section_id}"  data-field-id="${field_id}" class="" href="javascript:void(0);"><img src="images/dottedpopup_icon3.png" alt="#"></a></li>
-                                                     <li><a id="delete-row-from-section"  data-section-id="${section_id}"  data-field-id="${field_id}" class="deleteFieldBox" href="javascript:void(0);"><img src="images/dottedpopup_icon4.png" alt="#"></a></li>
-                                                     <li><a id="editPopup_${field_id}" data-section-id ="${section_id}"  data-field-id="${field_id}" class="formSmallBox_edit " type="${fieldType}" href="javascript:void(0);"><img src="images/dottedpopup_icon5.png" alt="#"></a></li>
-                                                     <li><a href="javascript:void(0);" class="sort_handle"><img src="images/dottedpopup_icon6.png" alt="#"></a></li>
-                                                  </ul>
-                                               </div>
-                                            </div>
-                                         </div>
-                                      </div>
-                                   </div>
-                                   <div id="formBuilder"></div>
-                                   <div class="form_rowHover_popup">
-                                      <ul>
-                                         <li class="sort_section"><a href="javascript:void(0);"><img src="images/blue4_dottes.png" alt="#"></a></li>
-                                         <li><a id="copySection_${section_id}" data-section-id ="${section_id}"  data-field-id="${field_id}" class="copySectionBox" href="javascript:void(0);"><img src="images/dottedpopup_icon3.png" alt="#"></a></li>
-                                         <li><a id="deleteSection_${section_id}" data-section-id="${section_id}"  data-field-id="${field_id}" class="deleteSectionBox" href="javascript:void(0);"><img src="images/dottedpopup_icon4.png" alt="#"></a></li>
-                                         <li><a class="formSmallBox_edit " href="javascript:void(0);"><img src="images/dottedpopup_icon5.png" alt="#"></a></li>
-                                      </ul>
-                                   </div>
-                                </div>`;
+                        for (var sectionKey in sectionData) {
+                            var fieldIds = [];
+                            var fieldsData = sectionData[sectionKey].fields;
+                            fieldsData = fieldsData.sort(function (a, b) {
+                                var avalue = a.order_no,
+                                    bvalue = b.order_no;
+                                if (avalue < bvalue) {
+                                    return -1;
+                                }
+                                if (avalue > bvalue) {
+                                    return 1;
+                                }
+                                return 0;
+                            });
 
-                                $("#dropForm").append(fieldHtml);
+                            var section_id = sectionData[sectionKey].section_id;
+                            fieldHtml = `<div class="form_rowHover group_container " id="section_${section_id}" >`;
+                            var isPrevPartial = false;
+                            var current_field = 0;
+                            for (var fieldKey in fieldsData) {
+                                current_field = current_field + 1
 
+                                let fieldObj = fieldsData[fieldKey];
+                                let fieldType = fieldObj.type;
+
+                                var field_id = fieldObj.field_id;
+                                var fieldSizeData = fieldsData[fieldKey];
+                                let fieldData = {"style": fieldSizeData.field_resize.width, "field_id": field_id};
+                                fieldIds.push(fieldData);
+                                //fieldIds.push(field_id);
+                                if (fieldType == 'text-input') {
+                                    console.log(fieldObj.partial_field);
+                                    if (fieldObj.partial_field == "") {
+                                        fieldHtml += `<div class="formRow clearfix element_main_row_container  innerBox" id="formRow-${field_id}">`;
+                                    } else {
+                                        isPrevPartial = true;
+                                    }
+
+                                    fieldHtml += `<div class="element_main_cell">
+                                                                  <div class="element_inline_cell">
+                                                                      <div class="formCell left-resizeable left-resizeable-${field_id}">
+                                                                          <div class="form_heading"><span><br></span></div>
+                                                                          <a id="handle" class="ui-resizable-handle ui-resizable-e resizeHandler_cstm"></a>
+                                                                      </div>
+                                                                      <div id="innerElement_${field_id}" class="formCell  col12 right-resizeable right-resizeable-${field_id}" style="padding: 0px">
+                                                                          <div class="form_editRow">
+                                                                              <div class="form_heading form_heading_dev" >
+                                                                              <span class="field_label" id="fieldLabel_${field_id}" >${fieldObj.basic_properties.field_name || defaults.messages.text}</span></div>
+                                                                              <div class="form_editRow_inner">
+                                                                                  <div class="controle_row_main"></div>
+                                                                                  <div class="form_field">
+                                                                                      <input type="text" placeholder="" value="${fieldObj.basic_properties.default_value || ''}" class="filed_name" id="fieldName_${field_id}"> </div>
+                                                                                  <div class="dotted_icon">
+                                                                                      <a class="dotted_btn" href="javascript:void(0);"><img src="images/dotted_img.png" alt="#"></a>
+                                                                                      <ul>
+                                                                                          <li>
+                                                                                              <a href="javascript:void(0);" id="left-cell-insertion" data-section-id="${section_id}"  data-field-id="${field_id}" type="${fieldType}"><img src="images/dottedpopup_icon1.png" alt="#"></a>
+                                                                                          </li>
+                                                                                          <li>
+                                                                                              <a href="javascript:void(0);" id="right-cell-insertion" type="${fieldType}" data-section-id="${section_id}"  data-field-id="${field_id}"><img src="images/dottedpopup_icon2.png" alt="#"></a>
+                                                                                          </li>
+                                                                                          <li>
+                                                                                              <a id="copy-row-in-section" data-section-id ="${section_id}" data-field-id="${field_id}" class=""  href="javascript:void(0);" type="${fieldType}"><img src="images/dottedpopup_icon3.png" alt="#"></a>
+                                                                                          </li>
+                                                                                          <li>
+                                                                                              <a id="delete-row-from-section" data-section-id="${section_id}"  data-field-id="${field_id}" class="deleteFieldBox"  href="javascript:void(0);" type="${fieldType}"><img src="images/dottedpopup_icon4.png" alt="#"></a>
+                                                                                          </li>
+                                                                                          <li>
+                                                                                              <a id="editPopup_${field_id}" data-section-id ="${section_id}"  data-field-id="${field_id}" class="formSmallBox_edit " type="${fieldType}" id="editPopup_${field_id}" class="formSmallBox_edit " type="${fieldType}" href="javascript:void(0);"><img src="images/dottedpopup_icon5.png" alt="#"></a>
+                                                                                          </li>
+                                                                                          <li>
+                                                                                              <a href="javascript:void(0);" class="sort_handle"><img src="images/dottedpopup_icon6.png" alt="#"></a>
+                                                                                          </li>
+                                                                                      </ul>
+                                                                                  </div>
+                                                                              </div>
+                                                                          </div>
+                                                                      </div>
+                                                                  </div>
+                                                              </div>`;
+
+
+                                    var nextObj = fieldsData[parseInt(fieldKey) + 1];
+
+
+                                    if (nextObj) {
+                                        if (fieldObj.partial_field == "" && nextObj.partial_field == "") {
+                                            fieldHtml += `</div>`;
+                                        }
+                                        if (fieldObj.partial_field == true && nextObj.partial_field == "") {
+                                            fieldHtml += `</div>`;
+                                        }
+                                    } else {
+                                        fieldHtml += `</div>`;
+                                    }
+
+
+                                }
                             }
+                            fieldHtml += `<div id="formBuilder"></div>
+                                          <div class="form_rowHover_popup ">
+                                              <ul>
+                                                  <li class="sort_section">
+                                                      <a href="javascript:void(0);"><img src="images/blue4_dottes.png" alt="#"></a>
+                                                  </li>
+                                                  <li>
+                                                      <a id="copySection_${section_id}" data-section-id ="${section_id}" data-field-id="${'fieldID'}" class="copySectionBox" href="javascript:void(0);"><img src="images/dottedpopup_icon3.png" alt="#"></a>
+                                                  </li>
+                                                  <li>
+                                                      <a id="deleteSection_${section_id}" data-section-id="${section_id}"  data-field-id="${'fieldID'}" class="deleteSectionBox" href="javascript:void(0);"><img src="images/dottedpopup_icon4.png" alt="#"></a>
+                                                  </li>
+                                                 <!-- <li>
+                                                      <a class="formSmallBox_edit " href="javascript:void(0);"><img src="images/dottedpopup_icon5.png" alt="#"></a>
+                                                  </li>-->
+                                              </ul>
+                                          </div>
+                                      </div>`;
+                            $("#dropForm").append(fieldHtml);
+                            $.each(fieldIds, function (index, value) {
+                                applyResizeable(value.field_id, section_id, value.style);
+                            });
+
                         }
                     }
                 }
@@ -500,6 +399,11 @@
 
         }
 
+        /**
+         * Set Fields HTML by type
+         * @param fieldId
+         * @param currentFieldSchema
+         */
         var setFieldSchema = function (fieldId, currentFieldSchema) {
             var fieldSchema = JSON.parse(localStorage.getItem("schema")) || {};
             fieldSchema[fieldId] = currentFieldSchema;
@@ -517,7 +421,6 @@
             window.localStorage.setItem('schema', JSON.stringify(currentfieldSchema));
         };
 
-
         /**
          * Remove the section
          * @param deletedSectionId
@@ -531,6 +434,10 @@
             });
             let sectionIndex = currentSectionSchema.indexOf(section);
             currentSectionSchema.splice(sectionIndex, 1);
+
+            if (currentSectionSchema.length < 1) {
+                $(".form_rowHover_parent").prepend(dropText);
+            }
             window.localStorage.setItem('schema', JSON.stringify(currentSectionSchema));
         };
         // remove field
@@ -572,7 +479,6 @@
                     if (oldSectionId == currentSectionId) {
 
                         sectionData[currentSectionId].section_id = newSectionID;
-
                         var sectionFields = sectionData[currentSectionId].fields;
                         var field_key = 0;
                         var fieldsSize = sectionData[currentSectionId].fields.length;
@@ -638,9 +544,10 @@
             window.localStorage.setItem('schema', JSON.stringify(sectionFieldsArr));
         });
 
-        // copy fields
+        /**
+         * @Copy fields within innner section
+         */
         $("body").on('click', '.copyFieldBox', function (e) {
-
 
             var currentfieldSchema = JSON.parse(localStorage.getItem("schema")) || {};
             var currentId = Object.keys(currentfieldSchema).length;
@@ -662,44 +569,36 @@
             var groupElement = cloneElement.parent().find('.innerBox');
 
             var groupId = extractId($('#innerElement_' + fieldId).parent().attr('id'));
-            console.log($('#innerElement_' + fieldId).parent().attr('id'));
-            console.log('grooup id--------');
-            console.log(groupId);
-            console.log(cloneElement.parents);
             cloneElement.appendTo("#section_" + groupId);
             // set id to current copy field
             var currentElement = cloneElement.find("#copyField_" + fieldId);
             currentElement.prop('id', "copyField_" + currentId);
-
-            //cloneElement.prop('class', 'textLabel_' + fieldId);
-
             // set local storage
             var currentFieldSchema = JSON.parse(localStorage.getItem("schema")) || {};
             setFieldSchema(currentId, currentFieldSchema[fieldId])
 
         });
+
         /**
          * @edit field with Popup
          */
         $("body").on("click", ".formSmallBox_edit", function (e) {
-
 
             showPopup($(this));
             $(".formEdit_main_popup").show();
             $("body").addClass("hidden");
             $("[href='#popupTab_1']").click();
 
-
         });
-
+        /**
+         * Show Dynamic Popup by field base
+         * @param obj
+         */
         var showPopup = function (obj) {
 
             let fieldId = (obj.attr('data-field-id'));
             let sectionId = obj.attr('data-section-id');
-
             let type = obj.attr('type');
-            console.log(fieldId);
-            console.log(sectionId);
             var fieldsData = getFieldSchema(fieldId, type);
 
             let fieldHeadingHtml = fieldHeading(type);
@@ -782,17 +681,14 @@
             showTinymceEditor();
         };
 
-        var getSectionSchema = function (popupId) {
-            var data = JSON.parse(localStorage.getItem("schema")) || {};
-            if (typeof data[popupId] === 'undefined') {
-                return data = {};
-            }
-            return data[popupId].fields;
-        };
-
+        /**
+         * Get field Schema by field_id and type
+         * @param fielId
+         * @param type
+         * @returns {*}
+         */
         var getFieldSchema = function (fielId, type = '') {
             var data = JSON.parse(localStorage.getItem("schema")) || {};
-
             for (var sectionkey in data) {
                 var sectionData = data[sectionkey];
                 for (var fieldKey in sectionData) {
@@ -808,52 +704,15 @@
                     }
                 }
             }
-            var fieldObj = {
-                "type": type,
-                "field_id": fieldID,
-                "basic_properties": {
-                    "field_name": '',
-                    "field_id": '',
-                    "default_value": '',
-                    "placeholder": '',
-                    "required": false,
-                    "hide_label": false,
-                    "add_picture": false,
-                    "field_under_label": false,
-                    "is_preloaded_paragraph": false,
-                    "view_only": false,
-                    "hide_field_label": false,
-                    "add_notes": false,
-                    "exclude_from_pdf_report": false,
-
-                },
-                "validate_properties": {
-                    "select_validate_condition": '',
-                    "regular_expression": '',
-                    "error_message": '',
-                },
-                "format_properties": {
-                    "label_name_format": '',
-                    "field_name_format": '',
-                },
-                "setting_properties": {
-                    "value_setting_option": '',
-                    "value_setting_text": ''
-                },
-                "report_properties": {
-                    "is_process_field_reporting": false,
-                    "select_process_category_variable": '',
-                },
-                "help_properties": {
-                    "help_message": '',
-
-                }
-            };
-
+            var fieldObj = textFieldJson(type, fieldID);
             return fieldObj;
         };
 
-
+        /**
+         * Show heading field in  Popup
+         * @param type
+         * @returns {string}
+         */
         var fieldHeading = function (type) {
             let fieldHeadingHtml = '';
             switch (type) {
@@ -866,9 +725,14 @@
             }
             return fieldHeadingHtml;
         };
+        /**
+         * Show Basic Field Popup
+         * @param obj
+         * @param type
+         * @param fieldsData
+         * @returns {string}
+         */
         var basicTab = function (obj, type, fieldsData) {
-
-            console.log(fieldsData);
             var basicFieldHtml = '';
             switch (type) {
                 case 'text-input':
@@ -897,7 +761,7 @@
                                                 </div>
                                                 <div class="formCell col9">
                                                     <div class="form_field">
-                                                        <input type="text" placeholder="" value="${fieldsData.basic_properties.field_id}" name="field_id" id="field_id">
+                                                        <input type="text" placeholder="" readonly="readonly" value="${fieldsData.basic_properties.field_id}" name="field_id" id="field_id">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1041,6 +905,13 @@
             }
             return basicFieldHtml;
         };
+
+        /**
+         * Show Validate Message Tab
+         * @param type
+         * @param fieldsData
+         * @returns {string}
+         */
         var validateMessageTab = function (type, fieldsData) {
             var validateFieldHtml = '';
             switch (type) {
@@ -1127,6 +998,13 @@
             }
             return validateFieldHtml;
         };
+
+        /**
+         * show Format Tab
+         * @param type
+         * @param fieldsData
+         * @returns {string}
+         */
         var formatTab = function (type, fieldsData) {
             var formatFieldHtml = '';
 
@@ -1142,7 +1020,7 @@
                                                     <div class="formCell col9">
                                                         <div class="container pb-5">
                                                             <form method="post">
-                                                                <textarea class="mytextarea"
+                                                                <textarea class="mytextarea" id="textarea_format_label"
                                                                           placeholder="Label Name" name="label_name_format"></textarea>
                                                             </form>
                                                         </div>
@@ -1156,9 +1034,10 @@
                                                     <div class="formCell col9">
                                                         <div class="container pb-5">
                                                             <form method="post">
-                                                                <textarea class="mytextarea"
-                                                                          placeholder="Input Field Name" name="field_name_format"></textarea>
+                                                                <textarea class="mytextarea" id="textarea_format_name"
+                                                                          placeholder="Input Field Name"  name="field_name_format"></textarea>
                                                             </form>
+                                                            <input type="hidden" value="3333">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1176,6 +1055,13 @@
             }
             return formatFieldHtml;
         };
+
+        /**
+         * Show Value setting Tab
+         * @param type
+         * @param fieldsData
+         * @returns {string}
+         */
         var valueSettingTab = function (type, fieldsData) {
             var valueSettingFieldHtml = '';
             switch (type) {
@@ -1615,6 +1501,13 @@
             }
             return valueSettingFieldHtml;
         };
+
+        /**
+         * Show reporting tab
+         * @param type
+         * @param fieldsData
+         * @returns {string}
+         */
         var reportSettingTab = function (type, fieldsData) {
             var reportSettingFieldHtml = '';
 
@@ -1678,6 +1571,12 @@
             return reportSettingFieldHtml;
 
         };
+        /**
+         * Show help message tab
+         * @param type
+         * @param fieldsData
+         * @returns {string}
+         */
         var helpMessageTab = function (type, fieldsData) {
             var helpMessageFieldHtml = '';
 
@@ -1712,7 +1611,7 @@
         };
 
         /**
-         * @save field attributes
+         * @save field value of Dynamic Popup
          */
         $(document).on('click', '.all_buttons', function (e) {
 
@@ -1723,6 +1622,14 @@
             let tabName = $(this).attr('tab-name');
             let fieldsArr = JSON.parse(localStorage.getItem("schema")) || {};
 
+
+
+            console.log('save)))))))))))))');
+
+            //console.log((((tinyMCE.get('#textarea_format_name').getContent()).replace(/(&nbsp;)*/g, "")).replace(/(<p>)*/g, "")).replace(/<(\/)?p[^>]*>/g, ""));
+            console.log( $(".mytextarea").text());
+            console.log(sectionId);
+            console.log(fieldsArr);
             for (var sectionkey in fieldsArr) {
 
                 var sectionData = fieldsArr[sectionkey];
@@ -1877,7 +1784,9 @@
 
         });
 
-
+        /**
+         * checkbox reporting in reporting tab
+         */
         $(document).on('click', '.check_process_field_reporting', function (e) {
             if ($(this).is(":checked")) {
                 $(".process_gategory_list").show();
@@ -1886,7 +1795,9 @@
             }
         });
 
-
+        /**
+         * Value setting dropdown show in Value Setting Tab
+         */
         $(document).on('click', '.valueSettingOptDropDown', function (e) {
 
             if ($(this).data('value') == "calculatedValue") {
@@ -1911,7 +1822,9 @@
 
             }
         });
-        // switch the tabs in popup
+        /**
+         * @ switch the tabs in popup
+         */
         $(document).on('click', '.popup_tabsTitle ul li a', function (e) {
             var id = $(this).attr("href");
             $(".popup_tabsTitle ul li a").removeClass("active");
@@ -1920,7 +1833,9 @@
             $(id).show();
             return false;
         });
-        // close the field popup
+        /**
+         * close the field popup
+         */
         $(document).on('click', '.popup_close', function (e) {
             $("body").removeClass("hidden");
             $(".all_popup").hide();
@@ -1929,7 +1844,12 @@
             $(".field-popup").html('');
         });
 
-        // ======================= FUNCTION BY ZESHAN =========================
+
+        /**
+         * Get field Object by field id and types
+         * @param type
+         * @param fieldID
+         */
         var getFieldObject = function (type, fieldID) {
             let fieldObj = {};
 
@@ -1938,6 +1858,12 @@
                     fieldObj = {
                         "type": type,
                         "field_id": fieldID,
+                        "field_resize":{
+                            "width":"",
+                            "padding":""
+                        },
+                        "order_no":0,
+                        "partial_field":true,
                         "basic_properties": {
                             "field_name": '',
                             "field_id": '',
@@ -1965,6 +1891,7 @@
                         },
                         "setting_properties": {
                             "value_setting_option": '',
+                            "value_setting_text": ''
                         },
                         "report_properties": {
                             "is_process_field_reporting": false,
@@ -1979,9 +1906,15 @@
             }
             return fieldObj;
         };
-        // ======================= FUNCTION BY ZESHAN =========================
-        /********************* BY ZESHAN **************************/
 
+
+        /**
+         * Partial fields in in section
+         * @param type
+         * @param sectionId
+         * @param fieldID
+         * @returns {string}
+         */
         var controlPartialTemplates = function (type, sectionId, fieldID) {
             let partialHtml = '';
             switch (type.toLowerCase()) {
@@ -1995,12 +1928,13 @@
                                     </div>
                                     <div class="formCell col12 right-resizeable-${fieldID}" style="padding: 0px">
                                         <div class="form_editRow">
-                                            <div class="form_heading form_heading_dev"><span>Text Field</span></div>
+                                            <div class="form_heading form_heading_dev">
+                                            <span class="field_label" id="fieldLabel_${fieldID}" >${defaults.messages.text}</span></div>
                                             <div class="form_editRow_inner">
                                                 <div class="controle_row_main">
                                                 </div>
                                                 <div class="form_field">
-                                                    <input type="text" placeholder=""> </div>
+                                                    <input type="text" placeholder="" value="" class="filed_name" id="fieldName_${fieldID}">  </div>
                                                 <div class="dotted_icon">
                                                     <a class="dotted_btn" href="javascript:void(0);"><img src="images/dotted_img.png" alt="#"></a>
                                                     <ul>
@@ -2008,7 +1942,7 @@
                                                             <a href="javascript:void(0);" id="left-cell-insertion" type="${type}" data-section-id="${sectionId}"><img src="images/dottedpopup_icon1.png" alt="#"></a>
                                                         </li>
                                                         <li>
-                                                            <a href="javascript:void(0);" id="right-cell-insertion" type="${type}" data-section-id="${sectionId}"><img src="images/dottedpopup_icon2.png" alt="#"></a>
+                                                            <a href="javascript:void(0);" id="right-cell-insertion" type="${type}" data-section-id="${sectionId}" data-field-id="${fieldID}"><img src="images/dottedpopup_icon2.png" alt="#"></a>
                                                         </li>
                                                         <li>
                                                             <a id="copy-row-in-section" type="${type}" data-section-id="${sectionId}" data-field-id="${fieldID}" href="javascript:void(0);"><img src="images/dottedpopup_icon3.png" alt="#"></a>
@@ -2017,7 +1951,7 @@
                                                             <a id="delete-row-from-section" type="${type}" data-section-id="${sectionId}" data-field-id="${fieldID}" href="javascript:void(0);"><img src="images/dottedpopup_icon4.png" alt="#"></a>
                                                         </li>
                                                         <li>
-                                                            <a id="editPopup_${fieldID}" class="formSmallBox_edit" type="${type}" href="javascript:void(0);"><img src="images/dottedpopup_icon5.png" alt="#"></a>
+                                                            <a id="editPopup_${fieldID}" data-section-id="${sectionId}" class="formSmallBox_edit" type="${type}" data-field-id="${fieldID}" href="javascript:void(0);"><img src="images/dottedpopup_icon5.png" alt="#"></a>
                                                         </li>
                                                         <li>
                                                             <a href="javascript:void(0);" class="sort_handle"><img src="images/dottedpopup_icon6.png" alt="#"></a>
@@ -2037,10 +1971,13 @@
             return partialHtml;
         };
 
-        // ======== return new section's field id ==========
 
+        /**
+         * return new section's field id
+         * @param sectionId
+         * @returns {string}
+         */
         var getNextFieldId = function (sectionId) {
-            // console.log(sectionId);
             let schema = JSON.parse(localStorage.getItem("schema"));
 
             //find section id by arrow function
@@ -2051,7 +1988,6 @@
             });
             //get last field from fields array
             let fieldsLength = sectionSchema[sectionId]["fields"].length;
-            console.log("fieldsLength", fieldsLength);
             let lastField = sectionSchema[sectionId]["fields"][(fieldsLength - 1)];
             lastField = lastField.field_id;
 
@@ -2064,13 +2000,22 @@
             return nextFieldId;
         };
 
-        // ======== set new field object in given section id inside local storage ==========
 
-        var setLocalStorageObject = function (type, sectionId, fieldId) {
+        /**
+         * Set new field object in given section id inside local storage
+         * @param type
+         * @param sectionId
+         * @param fieldId
+         */
+        var setLocalStorageObject = function (type, sectionId, fieldId,currentFieldOrder) {
+
 
             let fieldObject = getFieldObject(type, fieldId);
-            let schema = JSON.parse(localStorage.getItem("schema"));
 
+            fieldObject.order_no = currentFieldOrder+1;
+            console.log(fieldObject.order_no);
+
+            let schema = JSON.parse(localStorage.getItem("schema"));
 
             $.each(schema, function (index, value) {
                 if (value.hasOwnProperty(sectionId)) {
@@ -2081,15 +2026,33 @@
             window.localStorage.setItem('schema', JSON.stringify(schema));
         };
 
-        // ======== delete some object from local storage ==========
+        /**
+         * Set Fields local storage
+         * @param fieldObject
+         */
+        var setFieldsLocalStorage = function (sectionId, fieldObject) {
 
+            let schema = JSON.parse(localStorage.getItem("schema"));
+            $.each(schema, function (index, value) {
+                if (value.hasOwnProperty(sectionId)) {
+                    schema[index][sectionId]["fields"].push(fieldObject);
+                    return;
+                }
+            });
+            window.localStorage.setItem('schema', JSON.stringify(schema));
+        };
+
+
+        /**
+         * Delete some object from local storage
+         * @param sectionId
+         * @param fieldId
+         */
         var deleteObjectLocalStorage = function (sectionId, fieldId) {
-            // console.log(sectionId, fieldId);
 
             let schema = JSON.parse(localStorage.getItem("schema"));
             var updateLocalStorage = false;
             var schemaIndex = false;
-
 
             $.each(schema, function (index, value) {
 
@@ -2120,15 +2083,22 @@
 
 
             if (updateLocalStorage) {
+                if (schema.length < 1) {
+                    $(".form_rowHover_parent").prepend(dropText);
+                }
                 window.localStorage.setItem('schema', JSON.stringify(schema));
+
             }
 
         };
 
 
-        // =============================== left cell insertion inside a row ==============================
+        /**
+         * @left cell insertion inside a row
+         */
         $(document).on("click", "#left-cell-insertion", function () {
 
+            let currentFieldId = $(this).attr('data-field-id');
             let type = $(this).attr("type");
             let sectionId = $(this).data('section-id');
             let nextFieldId = getNextFieldId(sectionId);
@@ -2147,20 +2117,47 @@
             });
 
             parentDiv.prepend(partialHtml);
-            applyResizeable(nextFieldId);
-            //push in local storage
-            setLocalStorageObject(type, sectionId, nextFieldId);
+            applyResizeable(nextFieldId,sectionId);
+            let cloneField = getFieldObject(type, nextFieldId);
+
+            let  currentFields = getCurrentSectionField(sectionId);
+            let currentFieldObj = {};
+            currentFieldObj = currentFields.find(function (f) {
+                if (f.field_id == currentFieldId) {
+                    return true;
+                }
+            });
+
+            var currentFieldOrder = parseInt(currentFieldObj.order_no);
+            var nextOrderNo = currentFieldOrder + 1;
+            for(var fieldKey in currentFields) {
+                var single_field = currentFields[fieldKey];
+                if (single_field.order_no >= nextOrderNo ) {
+                    single_field.order_no = parseInt(single_field.order_no) + 1;
+                }
+            }
+            let schema = JSON.parse(localStorage.getItem("schema"));
+            $.each(schema, function (index, value) {
+                if (value.hasOwnProperty(sectionId)) {
+                    schema[index][sectionId]["fields"] = currentFields;
+                }
+            });
+            localStorage.setItem('schema',JSON.stringify(schema));
+            setTimeout(function () {
+                setLocalStorageObject(type, sectionId, nextFieldId,currentFieldOrder);
+            },500);
+
         });
 
-        // =============================== right cell insertion inside a row ==============================
+        /**
+         * @right cell insertion inside a row
+         */
         $(document).on("click", "#right-cell-insertion", function () {
 
+            let currentFieldId = $(this).attr('data-field-id');
             let type = $(this).attr('type');
             let sectionId = $(this).data('section-id');
             let nextFieldId = getNextFieldId(sectionId);
-            console.log("nextFieldId ", nextFieldId);
-
-
             let parentDiv = $(this).closest('.group_container > .element_main_row_container');
             let partialHtml = controlPartialTemplates(type, sectionId, nextFieldId);// + '-inline-cell'
 
@@ -2176,26 +2173,162 @@
             });
 
             parentDiv.append(partialHtml);
-            applyResizeable(nextFieldId);
+            applyResizeable(nextFieldId,sectionId);
+            let cloneField = getFieldObject(type, nextFieldId);
 
+            let  currentFields = getCurrentSectionField(sectionId);
+            let currentFieldObj = {};
+            currentFieldObj = currentFields.find(function (f) {
+                if (f.field_id == currentFieldId) {
+                    return true;
+                }
+            });
+
+            var currentFieldOrder = parseInt(currentFieldObj.order_no);
+            var nextOrderNo = currentFieldOrder + 1;
+            for(var fieldKey in currentFields) {
+                var single_field = currentFields[fieldKey];
+                if (single_field.order_no >= nextOrderNo ) {
+                    single_field.order_no = parseInt(single_field.order_no) + 1;
+                }
+            }
+            let schema = JSON.parse(localStorage.getItem("schema"));
+            $.each(schema, function (index, value) {
+                if (value.hasOwnProperty(sectionId)) {
+                    schema[index][sectionId]["fields"] = currentFields;
+                }
+            });
+            localStorage.setItem('schema',JSON.stringify(schema));
             //push in local storage
-            setLocalStorageObject(type, sectionId, nextFieldId);
+            setTimeout(function () {
+                 setLocalStorageObject(type, sectionId, nextFieldId,currentFieldOrder);
+            },500);
         });
 
-        // =============================== copy new row inside a section ==============================
-        $(document).on("click", "#copy-row-in-section", function () {
+        /**
+         * @copy new row inside a section
+         */
+        $(document).on("click", "#copy-row-in-section", function (key, value) {
+
+
             let sectionId = $(this).data("section-id");
             let type = $(this).attr("type");
             let nextFieldId = getNextFieldId(sectionId);
+            let currentFieldId = $(this).attr('data-field-id');
+            //var cloneTextElement = $(this).closest('#formRow-' + currentFieldId).clone();
+            var cloneTextElement = $(this).parents("div.element_main_cell").clone();
 
-            let fieldHtml = copyRowInSection(type, sectionId, nextFieldId);
-            $(this).closest("div.group_container").append(fieldHtml);
+            console.log('cloneTextElement********************8');
+            console.log(cloneTextElement.html());
 
-            setLocalStorageObject(type, sectionId, nextFieldId);
-            applyResizeable(nextFieldId);
+            if (type == 'text-input') {
+
+                /**********update edit popup ids*******/
+                cloneTextElement.find("#editPopup_" + currentFieldId).attr('data-field-id', nextFieldId);
+
+                /**********update delete fields ids*******/
+                cloneTextElement.find("#delete-row-from-section").attr('data-field-id', nextFieldId);
+                //cloneTextElement.find("#delete-row-from-section").prop('id', 'editPopup_' + nextFieldId);
+                /**********update copy fields ids*******/
+                cloneTextElement.find("#copy-row-in-section").attr('data-field-id', nextFieldId);
+
+                cloneTextElement.find("#editPopup_" + currentFieldId).prop('id', 'editPopup_' + nextFieldId);
+
+                cloneTextElement.find("#right-cell-insertion").attr('data-field-id', nextFieldId);
+                cloneTextElement.find("#left-cell-insertion").attr('data-field-id', nextFieldId);
+
+                /* fields update with value and label  */
+                cloneTextElement.find("#fieldName_" + currentFieldId).prop('id', 'fieldName_' + nextFieldId);
+                cloneTextElement.find("#fieldLabel_" + currentFieldId).prop('id', 'fieldLabel_' + nextFieldId);
+
+                cloneTextElement.attr('id', 'formRow-' + nextFieldId);
+                // update left side element of riseable
+                let leftElement = cloneTextElement.find('.left-resizeable-' + currentFieldId);
+                leftElement.removeClass('left-resizeable-' + currentFieldId).addClass('left-resizeable-' + nextFieldId).removeClass('ui-resizable');
+                leftElement.removeClass('ui-resizable').removeAttr("style");
+
+                // update right side element of riseable
+                let rightElement = cloneTextElement.find('.right-resizeable-' + currentFieldId);
+                rightElement.removeClass('right-resizeable-' + currentFieldId).addClass('right-resizeable-' + nextFieldId);
+                rightElement.removeClass('ui-resizable').removeAttr("style");
+
+                /*let sectionSchema = currentSection.find(function (v, index) {
+                    if (v.hasOwnProperty(sectionId)) {
+                        return true;
+                    }
+                });
+                $(this).closest("div.group_container").append(cloneTextElement);
+
+
+                let currentFields = sectionSchema[sectionId]["fields"];*/
+                let currentFieldObj = {};
+
+                let cloneHtml = cloneTextElement.html();
+                let clone = `<div class="formRow clearfix element_main_row_container innerBox" id="formRow-${nextFieldId}"><div class="element_main_cell">
+                                      ${cloneHtml}</div></div>`;
+
+                $(this).closest("div.group_container").append(clone)
+
+                let  currentFields = getCurrentSectionField(sectionId);
+
+                currentFieldObj = currentFields.find(function (f) {
+                    if (f.field_id == currentFieldId) {
+                        return true;
+                    }
+                });
+                let clonedFields = Object.assign({}, currentFieldObj);
+                clonedFields.field_id = nextFieldId;
+                var currentFieldOrder = parseInt(currentFieldObj.order_no);
+                updateFieldOrder(sectionId,currentFieldOrder,currentFields);
+
+                clonedFields.order_no = currentFieldOrder  + 1;
+
+                setFieldsLocalStorage(sectionId, clonedFields);
+                applyResizeable(nextFieldId,sectionId);
+            }
+
         });
 
-        // =============================== delete row from a section ==============================
+        /**
+         * Get current by section id
+         */
+        var getCurrentSectionField = function (sectionId) {
+
+            var currentSection = JSON.parse(localStorage.getItem('schema')) || {};
+
+            let sectionSchema = currentSection.find(function (v, index) {
+                if (v.hasOwnProperty(sectionId)) {
+                    return true;
+                }
+            });
+
+            let currentFieldObj = {};
+            let currentFields = sectionSchema[sectionId]["fields"];
+            return currentFields;
+
+        };
+
+        var updateFieldOrder  = function(sectionId,currentFieldOrder,currentFields) {
+
+            var nextOrderNo = currentFieldOrder + 1;
+            for(var fieldKey in currentFields) {
+                var single_field = currentFields[fieldKey];
+                if (single_field.order_no >= nextOrderNo ) {
+                    single_field.order_no = parseInt(single_field.order_no) + 1;
+                }
+            }
+            let schema = JSON.parse(localStorage.getItem("schema"));
+            $.each(schema, function (index, value) {
+                if (value.hasOwnProperty(sectionId)) {
+                    schema[index][sectionId]["fields"] = currentFields;
+                }
+            });
+            localStorage.setItem('schema',JSON.stringify(schema));
+        };
+
+        /**
+         * @Delete row from a section
+         */
         $(document).on("click", "#delete-row-from-section", function () {
             let sectionId = $(this).data("section-id");
             let fieldId = $(this).data("field-id");
@@ -2214,41 +2347,12 @@
                 }
             }
 
-            // remove whole section group if empty
-            /*if (parentDiv.length < 1) {
-              $(this).closest('.group_container').remove();
-            }*/
-
-            //update localstorage accordingly when you delete some item from section
             deleteObjectLocalStorage(sectionId, fieldId);
         });
 
-
         /**
-         * Apply resize on control
-         * @param lastIdCounter
+         * @showTinymceEditor
          */
-        var applyResizeable = function (nextFieldId) {
-
-            let tempLastId = nextFieldId || fieldID;
-            let elemId = ".left-resizeable-" + tempLastId;//".formRow-" + (tempLastId) +" "+ ".left-resizeable-" + tempLastId
-
-            // console.log("elemId", elemId);
-
-            $(elemId).resizable({
-                alsoResizeReverse: ".right-resizeable-" + tempLastId,
-                handles: {
-                    e: "#handle",
-                },
-                resize: function (event, ui) {
-                    console.log("resizing...");
-                },
-                stop: function (event, ui) {
-                }
-            });
-        };
-
-
         var showTinymceEditor = function () {
 
             tinymce.init({
@@ -2264,7 +2368,11 @@
 
     };
 
-
+    /**
+     * initilize the plugin
+      * @param options
+     * @returns {*}
+     */
     $.fn.formBuilder = function (options) {
         var form = this;
         return form.each(function () {
